@@ -1,56 +1,64 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Description>Adds simple dummy text generation</Description>
+		<Authors>Joshua Gwynn-Palmer</Authors>
+		<Copyright>Joshua Gwynn-Palmer</Copyright>
+		<Version>1.0.0</Version>
+		<PackageId>JGP.NLipsum</PackageId>
+		<PackageDescription>Adds simple dummy text generation</PackageDescription>
+		<RepositoryUrl>https://github.com/gwynnPalmer/JGP.NLipsum</RepositoryUrl>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="LipsumTexts\childharold.xml" />
-    <None Remove="LipsumTexts\decameron.xml" />
-    <None Remove="LipsumTexts\faust.xml" />
-    <None Remove="LipsumTexts\inderfremde.xml" />
-    <None Remove="LipsumTexts\lebateauivre.xml" />
-    <None Remove="LipsumTexts\lemasque.xml" />
-    <None Remove="LipsumTexts\lipsum.dtd" />
-    <None Remove="LipsumTexts\loremipsum.xml" />
-    <None Remove="LipsumTexts\nagyonfaj.xml" />
-    <None Remove="LipsumTexts\omagyar.xml" />
-    <None Remove="LipsumTexts\robinsonokruso.xml" />
-    <None Remove="LipsumTexts\theraven.xml" />
-    <None Remove="LipsumTexts\tierrayluna.xml" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="LipsumTexts\childharold.xml" />
+		<None Remove="LipsumTexts\decameron.xml" />
+		<None Remove="LipsumTexts\faust.xml" />
+		<None Remove="LipsumTexts\inderfremde.xml" />
+		<None Remove="LipsumTexts\lebateauivre.xml" />
+		<None Remove="LipsumTexts\lemasque.xml" />
+		<None Remove="LipsumTexts\lipsum.dtd" />
+		<None Remove="LipsumTexts\loremipsum.xml" />
+		<None Remove="LipsumTexts\nagyonfaj.xml" />
+		<None Remove="LipsumTexts\omagyar.xml" />
+		<None Remove="LipsumTexts\robinsonokruso.xml" />
+		<None Remove="LipsumTexts\theraven.xml" />
+		<None Remove="LipsumTexts\tierrayluna.xml" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Include="LipsumTexts\childharold.xml" />
-    <EmbeddedResource Include="LipsumTexts\decameron.xml" />
-    <EmbeddedResource Include="LipsumTexts\faust.xml" />
-    <EmbeddedResource Include="LipsumTexts\inderfremde.xml" />
-    <EmbeddedResource Include="LipsumTexts\lebateauivre.xml" />
-    <EmbeddedResource Include="LipsumTexts\lemasque.xml" />
-    <EmbeddedResource Include="LipsumTexts\lipsum.dtd" />
-    <EmbeddedResource Include="LipsumTexts\loremipsum.xml" />
-    <EmbeddedResource Include="LipsumTexts\nagyonfaj.xml" />
-    <EmbeddedResource Include="LipsumTexts\omagyar.xml" />
-    <EmbeddedResource Include="LipsumTexts\robinsonokruso.xml" />
-    <EmbeddedResource Include="LipsumTexts\theraven.xml" />
-    <EmbeddedResource Include="LipsumTexts\tierrayluna.xml" />
-  </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="LipsumTexts\childharold.xml" />
+		<EmbeddedResource Include="LipsumTexts\decameron.xml" />
+		<EmbeddedResource Include="LipsumTexts\faust.xml" />
+		<EmbeddedResource Include="LipsumTexts\inderfremde.xml" />
+		<EmbeddedResource Include="LipsumTexts\lebateauivre.xml" />
+		<EmbeddedResource Include="LipsumTexts\lemasque.xml" />
+		<EmbeddedResource Include="LipsumTexts\lipsum.dtd" />
+		<EmbeddedResource Include="LipsumTexts\loremipsum.xml" />
+		<EmbeddedResource Include="LipsumTexts\nagyonfaj.xml" />
+		<EmbeddedResource Include="LipsumTexts\omagyar.xml" />
+		<EmbeddedResource Include="LipsumTexts\robinsonokruso.xml" />
+		<EmbeddedResource Include="LipsumTexts\theraven.xml" />
+		<EmbeddedResource Include="LipsumTexts\tierrayluna.xml" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Update="Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
 
 </Project>
