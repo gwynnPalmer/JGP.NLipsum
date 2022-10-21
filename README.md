@@ -22,6 +22,6 @@ The built in text sources:
 NLipsum will choose a random selection of words from your text source and combine them into sentences and combine those sentences into paragraphs. You can request very specific criteria for your generated text or just let the defaults go to work. Generating text in HTML format is a breeze and there are built-in utility methods for HTML generation (paragraph tags).
 
 ## Meta
-This is not a very active project. I'll continue to accept pull requests for version support, and reasonable bugs and changes. However, there are no planned features, and no plans for major changes. I don't have much of a personal use for Lipsum these days, so if you're really hankering for updates, tell me about it!
+This is a fairly lazy port of Alex's work, aside from replacing arrays with lists this should essentially function identically.
 
 Please feel free to send me any feedback or tell me about a project in which you've used NLipsum. I'd love to hear about it.

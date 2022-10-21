@@ -21,13 +21,13 @@ public class TextFeature
     ///     Gets or sets the minimum value.
     /// </summary>
     /// <value>The minimum value.</value>
-    public int MinimumValue { get; protected set; }
+    protected int MinimumValue { get; set; }
 
     /// <summary>
     ///     Gets or sets the maximum value.
     /// </summary>
     /// <value>The maximum value.</value>
-    public int MaximumValue { get; protected set; }
+    protected int MaximumValue { get; set; }
 
     #region DOMAIN METHODS
 

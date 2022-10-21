@@ -1,6 +1,4 @@
-﻿using System.Resources;
-
-namespace NLipsum.Core;
+﻿namespace NLipsum.Core;
 
 /// <summary>
 ///     Class Lipsums.

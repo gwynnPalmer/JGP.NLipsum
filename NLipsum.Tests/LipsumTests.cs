@@ -214,7 +214,6 @@ public class LipsumTests
     [Test]
     public void TestGenerateNoParams()
     {
-        var rawText = Lipsums.LoremIpsum;
         var generated = LipsumGenerator.Generate(1);
 
         // What can I test to make sure this is working properly?
@@ -228,7 +227,6 @@ public class LipsumTests
     [Test]
     public void TestGenerateHtmlNoParams()
     {
-        var rawText = Lipsums.LoremIpsum;
         var generated = LipsumGenerator.GenerateHtml(1);
 
         // What can I test to make sure this is working properly?
