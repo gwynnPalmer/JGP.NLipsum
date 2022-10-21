@@ -1,131 +1,56 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{800E8048-2D52-4469-BAF6-6DFBB0E77FEA}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NLipsum.Core</RootNamespace>
-    <AssemblyName>NLipsum.Core</AssemblyName>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>NLipsum.Core.snk</AssemblyOriginatorKeyFile>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>2.0</OldToolsVersion>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>bin\Release\NLipsum.Core.XML</DocumentationFile>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <None Remove="LipsumTexts\childharold.xml" />
+    <None Remove="LipsumTexts\decameron.xml" />
+    <None Remove="LipsumTexts\faust.xml" />
+    <None Remove="LipsumTexts\inderfremde.xml" />
+    <None Remove="LipsumTexts\lebateauivre.xml" />
+    <None Remove="LipsumTexts\lemasque.xml" />
+    <None Remove="LipsumTexts\lipsum.dtd" />
+    <None Remove="LipsumTexts\loremipsum.xml" />
+    <None Remove="LipsumTexts\nagyonfaj.xml" />
+    <None Remove="LipsumTexts\omagyar.xml" />
+    <None Remove="LipsumTexts\robinsonokruso.xml" />
+    <None Remove="LipsumTexts\theraven.xml" />
+    <None Remove="LipsumTexts\tierrayluna.xml" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="features\Word.cs" />
-    <Compile Include="FormatStrings.cs" />
-    <Compile Include="LipsumGenerator.cs" />
-    <Compile Include="features\TextFeature.cs" />
-    <Compile Include="features\Paragraph.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
+    <EmbeddedResource Include="LipsumTexts\childharold.xml" />
+    <EmbeddedResource Include="LipsumTexts\decameron.xml" />
+    <EmbeddedResource Include="LipsumTexts\faust.xml" />
+    <EmbeddedResource Include="LipsumTexts\inderfremde.xml" />
+    <EmbeddedResource Include="LipsumTexts\lebateauivre.xml" />
+    <EmbeddedResource Include="LipsumTexts\lemasque.xml" />
+    <EmbeddedResource Include="LipsumTexts\lipsum.dtd" />
+    <EmbeddedResource Include="LipsumTexts\loremipsum.xml" />
+    <EmbeddedResource Include="LipsumTexts\nagyonfaj.xml" />
+    <EmbeddedResource Include="LipsumTexts\omagyar.xml" />
+    <EmbeddedResource Include="LipsumTexts\robinsonokruso.xml" />
+    <EmbeddedResource Include="LipsumTexts\theraven.xml" />
+    <EmbeddedResource Include="LipsumTexts\tierrayluna.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources.Designer.cs">
       <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="LipsumUtilities.cs" />
-    <Compile Include="features\Sentence.cs" />
-    <Compile Include="Lipsums.cs" />
   </ItemGroup>
+
   <ItemGroup>
-    <None Include="NLipsum.Core.snk" />
-    <None Include="resources\lipsum.dtd" />
-    <None Include="resources\childharold.xml" />
-    <None Include="resources\decameron.xml" />
-    <None Include="resources\faust.xml" />
-    <None Include="resources\inderfremde.xml" />
-    <None Include="resources\lebateauivre.xml" />
-    <None Include="resources\lemasque.xml" />
-    <None Include="resources\loremipsum.xml" />
-    <None Include="resources\nagyonfaj.xml" />
-    <None Include="resources\omagyar.xml" />
-    <None Include="resources\robinsonokruso.xml" />
-    <None Include="resources\theraven.xml" />
-    <None Include="resources\tierrayluna.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="licensing\LICENSE.txt" />
-    <Content Include="licensing\Lipsum %28python%29 license.txt" />
-    <Content Include="licensing\readme.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <SubType>Designer</SubType>
+    <EmbeddedResource Update="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

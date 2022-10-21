@@ -1,59 +1,81 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using NLipsum.Core.Properties;
+﻿using System.Resources;
 
-namespace NLipsum.Core {
-	/// <summary>
-	/// All of these Lipsums are derived from the files at http://lipsum.sourceforge.net/
-	/// </summary>
-	public static class Lipsums {
-		public static string ChildHarold {
-			get { return LipsumUtilities.GetTextFromRawXml(Resources.ChildHarold).ToString(); }
-		}
+namespace NLipsum.Core;
 
-		public static string Decameron {
-			get { return LipsumUtilities.GetTextFromRawXml(Resources.Decameron).ToString(); }
-		}
+/// <summary>
+///     Class Lipsums.
+/// </summary>
+public static class Lipsums
+{
+    /// <summary>
+    ///     Gets the child harold.
+    /// </summary>
+    /// <value>The child harold.</value>
+    public static string ChildHarold => LipsumUtilities.GetTextFromRawXml(Resources.childharold).ToString();
 
-		public static string Faust {
-			get { return LipsumUtilities.GetTextFromRawXml(Resources.Faust).ToString(); }
-		}
+    /// <summary>
+    ///     Gets the decameron.
+    /// </summary>
+    /// <value>The decameron.</value>
+    public static string Decameron => LipsumUtilities.GetTextFromRawXml(Resources.decameron).ToString();
 
-		public static string InDerFremde {
-			get { return LipsumUtilities.GetTextFromRawXml(Resources.InDerFremde).ToString(); }
-		}
+    /// <summary>
+    ///     Gets the faust.
+    /// </summary>
+    /// <value>The faust.</value>
+    public static string Faust => LipsumUtilities.GetTextFromRawXml(Resources.faust).ToString();
 
-		public static string LeBateauIvre {
-			get { return LipsumUtilities.GetTextFromRawXml(Resources.LeBateauIvre).ToString(); }
-		}
+    /// <summary>
+    ///     Gets the in der fremde.
+    /// </summary>
+    /// <value>The in der fremde.</value>
+    public static string InDerFremde => LipsumUtilities.GetTextFromRawXml(Resources.inderfremde).ToString();
 
-		public static string LeMasque {
-			get { return LipsumUtilities.GetTextFromRawXml(Resources.LeMasque).ToString(); }
-		}
+    /// <summary>
+    ///     Gets the le bateau ivre.
+    /// </summary>
+    /// <value>The le bateau ivre.</value>
+    public static string LeBateauIvre => LipsumUtilities.GetTextFromRawXml(Resources.lebateauivre).ToString();
 
-		public static string LoremIpsum {
-			get { return LipsumUtilities.GetTextFromRawXml(Resources.LoremIpsum).ToString(); }
-		}
+    /// <summary>
+    ///     Gets the le masque.
+    /// </summary>
+    /// <value>The le masque.</value>
+    public static string LeMasque => LipsumUtilities.GetTextFromRawXml(Resources.lemasque).ToString();
 
-		public static string NagyonFaj {
-			get { return LipsumUtilities.GetTextFromRawXml(Resources.NagyonFaj).ToString(); }
-		}
+    /// <summary>
+    ///     Gets the lorem ipsum.
+    /// </summary>
+    /// <value>The lorem ipsum.</value>
+    public static string LoremIpsum => LipsumUtilities.GetTextFromRawXml(Resources.loremipsum).ToString();
 
-		public static string Omagyar {
-			get { return LipsumUtilities.GetTextFromRawXml(Resources.Omagyar).ToString(); }
-		}
+    /// <summary>
+    ///     Gets the nagyon faj.
+    /// </summary>
+    /// <value>The nagyon faj.</value>
+    public static string NagyonFaj => LipsumUtilities.GetTextFromRawXml(Resources.nagyonfaj).ToString();
 
-		public static string RobinsonoKruso {
-			get { return LipsumUtilities.GetTextFromRawXml(Resources.RobinsonoKruso).ToString(); }
-		}
+    /// <summary>
+    ///     Gets the omagyar.
+    /// </summary>
+    /// <value>The omagyar.</value>
+    public static string Omagyar => LipsumUtilities.GetTextFromRawXml(Resources.omagyar).ToString();
 
-		public static string TheRaven {
-			get { return LipsumUtilities.GetTextFromRawXml(Resources.TheRaven).ToString(); }
-		}
+    /// <summary>
+    ///     Gets the robinsono kruso.
+    /// </summary>
+    /// <value>The robinsono kruso.</value>
+    public static string RobinsonoKruso => LipsumUtilities.GetTextFromRawXml(Resources.robinsonokruso).ToString();
 
-		public static string TierrayLuna {
-			get { return LipsumUtilities.GetTextFromRawXml(Resources.TierrayLuna).ToString(); }
-		}
-	}
+    /// <summary>
+    ///     Gets the raven.
+    /// </summary>
+    /// <value>The raven.</value>
+    public static string TheRaven => LipsumUtilities.GetTextFromRawXml(Resources.theraven).ToString();
+
+    /// <summary>
+    ///     Gets the tierray luna.
+    /// </summary>
+    /// <value>The tierray luna.</value>
+    public static string TierrayLuna => LipsumUtilities.GetTextFromRawXml(Resources.tierrayluna).ToString();
 }

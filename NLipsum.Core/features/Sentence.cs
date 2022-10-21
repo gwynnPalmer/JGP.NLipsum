@@ -1,92 +1,89 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace NLipsum.Core.Features;
 
-namespace NLipsum.Core {
+/// <summary>
+///     Class Sentence.
+///     Implements the <see cref="TextFeature" />
+/// </summary>
+/// <seealso cref="TextFeature" />
+public class Sentence : TextFeature
+{
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="Sentence" /> class.
+    /// </summary>
+    public Sentence() : this(Medium.MinimumValue, Medium.MaximumValue)
+    {
+    }
 
-	/// <summary>
-	/// A sentence that can be formatted.
-	/// </summary>
-	public class Sentence : TextFeature {
-		#region Constructors
-		/// <summary>
-		/// Instantiates a medium sized sentence with Phrase formatting.
-		/// </summary>
-		public Sentence() : this(Sentence.Medium.MinimumValue, Sentence.Medium.MaximumValue) { }
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="Sentence" /> class.
+    /// </summary>
+    /// <param name="minimum">The minimum.</param>
+    /// <param name="maximum">The maximum.</param>
+    /// <param name="formatString">The format string.</param>
+    public Sentence(int minimum, int maximum, string? formatString = null)
+    {
+        MinimumWords = minimum;
+        MaximumWords = maximum;
+        FormatString = formatString ?? FormatStrings.Sentence.Phrase;
+    }
 
-		/// <summary>
-		/// Instantiates a sentence with Phrase formatting.
-		/// </summary>
-		/// <param name="minWords">The minimum amount of words to be included in this sentence.</param>
-		/// <param name="maxWords">The maximum amount of words to be included in this sentence.</param>
-		public Sentence(uint minWords, uint maxWords)
-			: this(minWords, maxWords, FormatStrings.Sentence.Phrase) { }
+    /// <summary>
+    ///     Gets the short.
+    /// </summary>
+    /// <value>The short.</value>
+    public static Sentence Short => new(2, 8);
 
-		/// <summary>
-		/// Instantiates a sentence based on the passed criteria.
-		/// </summary>
-		/// <param name="minWords">The minimum amount of words to be included in this sentence.</param>
-		/// <param name="maxWords">The maximum amount of words to be included in this sentence.</param>
-		/// <param name="formatString">The string used to format this sentence.</param>
-		public Sentence(uint minWords, uint maxWords, string formatString) {
-			this.FormatString = formatString;
-			this.MinimumWords = minWords;
-			this.MaximumWords = maxWords;
-		}
-		#endregion
+    /// <summary>
+    ///     Gets the medium.
+    /// </summary>
+    /// <value>The medium.</value>
+    public static Sentence Medium => new(3, 20);
 
-		#region Inheritance wrappers
+    /// <summary>
+    ///     Gets the long.
+    /// </summary>
+    /// <value>The long.</value>
+    public static Sentence Long => new(6, 40);
 
-		/// <summary>
-		/// Gets or sets the minimum amount of words in this sentence.
-		/// </summary>
-		public uint MinimumWords {
-			get { return MinimumValue; }
-			set { MinimumValue = value; }
-		}
+    /// <summary>
+    ///     Gets or sets the maximum words.
+    /// </summary>
+    /// <value>The maximum words.</value>
+    public int MaximumWords
+    {
+        get => MaximumValue;
 
-		/// <summary>
-		/// Gets or sets the maximum amount of words in this sentence.
-		/// </summary>
-		public uint MaximumWords {
-			get { return MaximumValue; }
-			set { MaximumValue = value; }
-		}
+        set => MaximumValue = value;
+    }
 
-		#endregion
+    /// <summary>
+    ///     Gets or sets the minimum words.
+    /// </summary>
+    /// <value>The minimum words.</value>
+    public int MinimumWords
+    {
+        get => MinimumValue;
 
+        set => MinimumValue = value;
+    }
 
-		#region Static Sentence Types
-		/// <summary>
-		/// Gets a Short Sentence.  (MinimumWords = 2, MaximumWords=8)
-		/// </summary>
-		public static Sentence Short {
-			get { return new Sentence(2, 8); }
-		}
+    #region OVERRIDES & ESSENTIALS
 
-		/// <summary>
-		/// Gets a Medium length Sentence.  (MinimumWords = 3, MaximumWords=20)
-		/// </summary>
-		public static Sentence Medium {
-			get { return new Sentence(3, 20); }
-		}
+    /// <summary>
+    ///     Formats the specified text.
+    /// </summary>
+    /// <param name="text">The text.</param>
+    /// <returns>System.String.</returns>
+    public override string Format(string text)
+    {
+        var result = base.Format(text);
+        if (result.Length > 1)
+        {
+            result = result.Substring(0, 1).ToUpper() + result.Substring(1);
+        }
 
-		/// <summary>
-		/// Gets a Long Sentence.  (MinimumWords = 6, MaximumWords=40)
-		/// </summary>
-		public static Sentence Long {
-			get { return new Sentence(6, 40); }
-		}
-		#endregion
+        return result;
+    }
 
-		public override string Format(string text) {
-			string result = base.Format(text);
-			if (result.Length > 1) {
-				result = result.Substring(0, 1).ToUpper() + result.Substring(1);
-			}
-			return result;
-		}
-
-	}
-
+    #endregion
 }

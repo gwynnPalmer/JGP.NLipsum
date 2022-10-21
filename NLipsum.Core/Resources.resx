@@ -112,46 +112,49 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="ChildHarold" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\NLipsum.Core\resources\childharold.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="childharold" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>LipsumTexts\childharold.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="Decameron" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\NLipsum.Core\resources\decameron.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="decameron" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>LipsumTexts\decameron.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="Faust" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\NLipsum.Core\resources\faust.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="faust" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>LipsumTexts\faust.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="InDerFremde" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\NLipsum.Core\resources\inderfremde.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="inderfremde" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>LipsumTexts\inderfremde.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="LeBateauIvre" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\NLipsum.Core\resources\lebateauivre.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="lebateauivre" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>LipsumTexts\lebateauivre.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="LeMasque" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\NLipsum.Core\resources\lemasque.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="lemasque" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>LipsumTexts\lemasque.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="LoremIpsum" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\NLipsum.Core\resources\loremipsum.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="lipsum" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>LipsumTexts\lipsum.dtd;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="NagyonFaj" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\NLipsum.Core\resources\nagyonfaj.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="loremipsum" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>LipsumTexts\loremipsum.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="Omagyar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\NLipsum.Core\resources\omagyar.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="nagyonfaj" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>LipsumTexts\nagyonfaj.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="RobinsonoKruso" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\NLipsum.Core\resources\robinsonokruso.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="omagyar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>LipsumTexts\omagyar.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="TheRaven" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\NLipsum.Core\resources\theraven.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="robinsonokruso" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>LipsumTexts\robinsonokruso.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="TierrayLuna" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\NLipsum.Core\resources\tierrayluna.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="theraven" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>LipsumTexts\theraven.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="tierrayluna" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>LipsumTexts\tierrayluna.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>

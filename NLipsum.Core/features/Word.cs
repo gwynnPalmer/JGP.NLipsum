@@ -1,78 +1,69 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace NLipsum.Core.Features;
 
-namespace NLipsum.Core {
-	public class Word : TextFeature {
-		#region Constructors
-		/// <summary>
-		/// Instantiates a medium sized sentence with Phrase formatting.
-		/// </summary>
-		public Word() : this(Word.Medium.MinimumValue, Word.Medium.MaximumValue) { }
+/// <summary>
+///     Class Word.
+///     Implements the <see cref="TextFeature" />
+/// </summary>
+/// <seealso cref="TextFeature" />
+public class Word : TextFeature
+{
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="Word" /> class.
+    /// </summary>
+    public Word() : this(Medium.MinimumCharacters, Medium.MaximumCharacters)
+    {
+    }
 
-		/// <summary>
-		/// Instantiates a sentence with Phrase formatting.
-		/// </summary>
-		/// <param name="minWords">The minimum amount of words to be included in this sentence.</param>
-		/// <param name="maxWords">The maximum amount of words to be included in this sentence.</param>
-		public Word(uint minWords, uint maxWords)
-			: this(minWords, maxWords, FormatStrings.Unformatted) { }
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="Word" /> class.
+    /// </summary>
+    /// <param name="minimum">The minimum.</param>
+    /// <param name="maximum">The maximum.</param>
+    /// <param name="formatString">The format string.</param>
+    public Word(int minimum, int maximum, string? formatString = null)
+    {
+        MinimumCharacters = minimum;
+        MaximumCharacters = maximum;
+        FormatString = formatString ?? FormatStrings.Default;
+    }
 
-		/// <summary>
-		/// Instantiates a sentence based on the passed criteria.
-		/// </summary>
-		/// <param name="minWords">The minimum amount of words to be included in this sentence.</param>
-		/// <param name="maxWords">The maximum amount of words to be included in this sentence.</param>
-		/// <param name="formatString">The string used to format this sentence.</param>
-		public Word(uint minWords, uint maxWords, string formatString) {
-			this.FormatString = formatString;
-			this.MinimumValue = minWords;
-			this.MaximumValue = maxWords;
-		}
-		#endregion
+    /// <summary>
+    ///     Gets or sets the minimum characters.
+    /// </summary>
+    /// <value>The minimum characters.</value>
+    public int MinimumCharacters
+    {
+        get => MinimumValue;
 
-		#region Inheritance wrappers
+        set => MinimumValue = value;
+    }
 
-		/// <summary>
-		/// Gets or sets the minimum amount of characters in this word.
-		/// </summary>
-		public uint MinimumCharacters {
-			get { return MinimumValue; }
-			set { MinimumValue = value; }
-		}
+    /// <summary>
+    ///     Gets or sets the maximum characters.
+    /// </summary>
+    /// <value>The maximum characters.</value>
+    public int MaximumCharacters
+    {
+        get => MaximumValue;
 
-		/// <summary>
-		/// Gets or sets the maximum amount of characters in this word.
-		/// </summary>
-		public uint MaximumCharacters {
-			get { return MaximumValue; }
-			set { MaximumValue = value; }
-		}
+        set => MaximumValue = value;
+    }
 
-		#endregion
+    /// <summary>
+    ///     Gets the short.
+    /// </summary>
+    /// <value>The short.</value>
+    public static Word Short => new(1, 3);
 
+    /// <summary>
+    ///     Gets the medium.
+    /// </summary>
+    /// <value>The medium.</value>
+    public static Word Medium => new(4, 8);
 
-		#region Static Sentence Types
-		/// <summary>
-		/// Gets a Short Sentence.  (MinimumWords = 2, MaximumWords=8)
-		/// </summary>
-		public static Word Short {
-			get { return new Word(1, 3); }
-		}
-
-		/// <summary>
-		/// Gets a Medium length Sentence.  (MinimumWords = 3, MaximumWords=20)
-		/// </summary>
-		public static Word Medium {
-			get { return new Word(4, 8); }
-		}
-
-		/// <summary>
-		/// Gets a Long Sentence.  (MinimumWords = 6, MaximumWords=40)
-		/// </summary>
-		public static Word Long {
-			get { return new Word(10, 25); }
-		}
-		#endregion
-	}
+    /// <summary>
+    ///     Gets the long.
+    /// </summary>
+    /// <value>The long.</value>
+    public static Word Long => new(10, 25);
 }

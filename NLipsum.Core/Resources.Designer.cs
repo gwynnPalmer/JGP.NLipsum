@@ -8,9 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NLipsum.Core.Properties {
+namespace NLipsum.Core {
     using System;
-    using System.Reflection;
     
     
     /// <summary>
@@ -20,7 +19,7 @@ namespace NLipsum.Core.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -40,7 +39,7 @@ namespace NLipsum.Core.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NLipsum.Core.Properties.Resources", typeof(Resources).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NLipsum.Core.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -76,9 +75,9 @@ namespace NLipsum.Core.Properties {
         ///	mine dares not call thee from thy sacred hill
         ///	yet there ive wandered by thy  [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string ChildHarold {
+        internal static string childharold {
             get {
-                return ResourceManager.GetString("ChildHarold", resourceCulture);
+                return ResourceManager.GetString("childharold", resourceCulture);
             }
         }
         
@@ -92,9 +91,9 @@ namespace NLipsum.Core.Properties {
         ///    &lt;text&gt;
         ///	convenevole cosa e carissime donne che ciascheduna cosa la quale l&apos;uomo fa dallo ammirabile e santo nome di colui il quale di tutte fu facitore le dea principio per che dovendo io al vostro novellare sí come primo dare cominciamento intendo da una delle sue maravigliose cose incominciare accio [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string Decameron {
+        internal static string decameron {
             get {
-                return ResourceManager.GetString("Decameron", resourceCulture);
+                return ResourceManager.GetString("decameron", resourceCulture);
             }
         }
         
@@ -114,9 +113,9 @@ namespace NLipsum.Core.Properties {
         ///	wie ihr aus dunst und nebel um mich steigt
         ///	mein [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string Faust {
+        internal static string faust {
             get {
-                return ResourceManager.GetString("Faust", resourceCulture);
+                return ResourceManager.GetString("faust", resourceCulture);
             }
         }
         
@@ -141,9 +140,9 @@ namespace NLipsum.Core.Properties {
         ///	doch weiter weiter sonder rast
         ///	du darfst nicht still [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string InDerFremde {
+        internal static string inderfremde {
             get {
-                return ResourceManager.GetString("InDerFremde", resourceCulture);
+                return ResourceManager.GetString("inderfremde", resourceCulture);
             }
         }
         
@@ -153,7 +152,7 @@ namespace NLipsum.Core.Properties {
         ///&lt;lipsum&gt;
         ///    &lt;copyright&gt;This text is under public domain&lt;/copyright&gt;
         ///    &lt;title&gt;Le Bateau Ivre&lt;/title&gt;
-        ///    &lt;author&gt;Arthur Baudelaire&lt;/author&gt;
+        ///    &lt;author&gt;Arthur Rimbaud&lt;/author&gt;
         ///    &lt;text&gt;
         ///	comme je descendais des fleuves impassibles
         ///	je ne me sentis plus guidé par les haleurs 
@@ -162,11 +161,11 @@ namespace NLipsum.Core.Properties {
         ///
         ///	j&apos;étais insoucieux de tous les équipages
         ///	porteur de blés flamands ou de cotons anglais
-        ///	quand avec mes hal [rest of string was truncated]&quot;;.
+        ///	quand avec mes haleur [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string LeBateauIvre {
+        internal static string lebateauivre {
             get {
-                return ResourceManager.GetString("LeBateauIvre", resourceCulture);
+                return ResourceManager.GetString("lebateauivre", resourceCulture);
             }
         }
         
@@ -176,7 +175,7 @@ namespace NLipsum.Core.Properties {
         ///&lt;lipsum&gt;
         ///    &lt;copyright&gt;This text is under public domain&lt;/copyright&gt;
         ///    &lt;title&gt;Le Masque&lt;/title&gt;
-        ///    &lt;author&gt;Arthur Rembaud&lt;/author&gt;
+        ///    &lt;author&gt;Charles Baudelaire&lt;/author&gt;
         ///    &lt;text&gt;
         ///	contemplons ce trésor de grâces florentines
         ///	dans l&apos;ondulation de ce corps musculeux
@@ -184,11 +183,27 @@ namespace NLipsum.Core.Properties {
         ///	cette femme morceau vraiment miraculeux
         ///	divinement robuste adorablement mince
         ///	est faite pour trôner sur des lits somptueux
-        ///	et charmer les loisirs d&apos;un pontife ou d&apos;un prin [rest of string was truncated]&quot;;.
+        ///	et charmer les loisirs d&apos;un pontife ou d&apos;un  [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string LeMasque {
+        internal static string lemasque {
             get {
-                return ResourceManager.GetString("LeMasque", resourceCulture);
+                return ResourceManager.GetString("lemasque", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;!-- This is the valid DTD of a lipsum file used by Lipsum - the text generator --&gt;
+        ///&lt;!ELEMENT lipsum (copyright, title, author, text)&gt;
+        ///
+        ///    &lt;!ELEMENT copyright (#PCDATA)&gt;
+        ///    &lt;!ELEMENT title (#PCDATA)&gt;
+        ///    &lt;!ELEMENT author (#PCDATA)&gt;
+        ///    &lt;!ELEMENT text (#PCDATA)&gt;
+        ///.
+        /// </summary>
+        internal static string lipsum {
+            get {
+                return ResourceManager.GetString("lipsum", resourceCulture);
             }
         }
         
@@ -202,9 +217,9 @@ namespace NLipsum.Core.Properties {
         ///    &lt;text&gt;
         ///	lorem ipsum dolor sit amet consetetur sadipscing elitr sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat sed diam voluptua at vero eos et accusam et justo duo dolores et ea rebum stet clita kasd gubergren no sea takimata sanctus est lorem ipsum dolor sit amet lorem ipsum dolor sit amet cons [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string LoremIpsum {
+        internal static string loremipsum {
             get {
-                return ResourceManager.GetString("LoremIpsum", resourceCulture);
+                return ResourceManager.GetString("loremipsum", resourceCulture);
             }
         }
         
@@ -235,9 +250,9 @@ namespace NLipsum.Core.Properties {
         ///	kettõs teher
         ///	s ket [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string NagyonFaj {
+        internal static string nagyonfaj {
             get {
-                return ResourceManager.GetString("NagyonFaj", resourceCulture);
+                return ResourceManager.GetString("nagyonfaj", resourceCulture);
             }
         }
         
@@ -251,9 +266,9 @@ namespace NLipsum.Core.Properties {
         ///    &lt;text&gt;
         ///	volek syrolm thudothlon syrolmol sepedyk buol ozuk epedek walasth vylagumtul sydou fyodumtul ezes urumemtuul o en eses urodum eggen yg fyodum syrou aniath thekunched buabeleul kyniuhhad scemem kunuel arad en iunhum buol farad the werud hullothya en iunhum olelothya vylag uilaga viragnac uiraga keseruen ky [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string Omagyar {
+        internal static string omagyar {
             get {
-                return ResourceManager.GetString("Omagyar", resourceCulture);
+                return ResourceManager.GetString("omagyar", resourceCulture);
             }
         }
         
@@ -271,9 +286,9 @@ namespace NLipsum.Core.Properties {
         ///	plifortigxis gxis fine mi forlasis mian lernejon kaj hejmon kaj
         ///	piede mi trovis mian vojon al hull kie m [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string RobinsonoKruso {
+        internal static string robinsonokruso {
             get {
-                return ResourceManager.GetString("RobinsonoKruso", resourceCulture);
+                return ResourceManager.GetString("robinsonokruso", resourceCulture);
             }
         }
         
@@ -292,9 +307,9 @@ namespace NLipsum.Core.Properties {
         ///	as of some one gently rapping rapping at my chamber door
         ///	tis some visit [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string TheRaven {
+        internal static string theraven {
             get {
-                return ResourceManager.GetString("TheRaven", resourceCulture);
+                return ResourceManager.GetString("theraven", resourceCulture);
             }
         }
         
@@ -316,9 +331,9 @@ namespace NLipsum.Core.Properties {
         ///	tierra tan sólo tierra
         ///	tierra para los [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string TierrayLuna {
+        internal static string tierrayluna {
             get {
-                return ResourceManager.GetString("TierrayLuna", resourceCulture);
+                return ResourceManager.GetString("tierrayluna", resourceCulture);
             }
         }
     }

@@ -1,215 +1,229 @@
-using System;
-using System.Text;
-using System.Linq;
-using NUnit.Framework;
 using NLipsum.Core;
+using NLipsum.Core.Features;
+using NUnit.Framework;
 
-namespace NLipsum.Tests {
-	[TestFixture]
-	public class LipsumTests {
-		#region Constructor tests
-		[Test]
-		public void TestLoadXml() {
-			string template ="<root><text>{0}</text></root>";
-			string expectedText = "Lorem ipsum dolor sit amet";
-			string formatted = String.Format(template, expectedText);
-			
-			LipsumGenerator lipsum = new LipsumGenerator(formatted, true);
-			Assert.AreEqual(lipsum.LipsumText.ToString(), expectedText);
-		}
+namespace NLipsum.Tests;
 
-		[Test]
-		public void TestLoadPlainText() {
-			string expectedText = "Lorem ipsum dolor sit amet";
-			
-			LipsumGenerator lipsum = new LipsumGenerator(expectedText, false);
-			Assert.AreEqual(lipsum.LipsumText.ToString(), expectedText);
-		}
+[TestFixture]
+public class LipsumTests
+{
+    #region Constructor tests
 
-	    [Test]
-	    public void DefaultConstructorContainsLoremIpsum()
-	    {
-	        string expected = Lipsums.LoremIpsum;
-	        var generator = new LipsumGenerator();
-	        Assert.AreEqual(expected, generator.LipsumText.ToString());
-	    }
+    [Test]
+    public void TestLoadXml()
+    {
+        var template = "<root><text>{0}</text></root>";
+        var expectedText = "Lorem ipsum dolor sit amet";
+        var formatted = string.Format(template, expectedText);
 
-		#endregion
+        var lipsum = new LipsumGenerator(formatted, true);
+        Assert.AreEqual(lipsum.LipsumText.ToString(), expectedText);
+    }
 
-		#region Words
+    [Test]
+    public void TestLoadPlainText()
+    {
+        var expectedText = "Lorem ipsum dolor sit amet";
 
-		[Test]
-		public void TestPrepareWords() {
-			string rawText = "lorem ipsum dolor sit amet consetetur";
-			string[] expectedArray = new string[] {
-				"lorem", "ipsum", "dolor", "sit", "amet", "consetetur"
-			};
-			int wordsInRawText = 6;
+        var lipsum = new LipsumGenerator(expectedText, false);
+        Assert.AreEqual(lipsum.LipsumText.ToString(), expectedText);
+    }
 
-			LipsumGenerator lipsum = new LipsumGenerator(rawText, false);
-			string[] wordsPrepared = lipsum.PreparedWords;
+    [Test]
+    public void DefaultConstructorContainsLoremIpsum()
+    {
+        var expected = Lipsums.LoremIpsum;
+        var generator = new LipsumGenerator();
+        Assert.AreEqual(expected, generator.LipsumText.ToString());
+    }
 
-			Assert.AreEqual(wordsInRawText, wordsPrepared.Length);
-			CollectionAssert.AreEqual(wordsPrepared, expectedArray);
+    #endregion
 
-		}
+    #region Words
 
-		[Test]
-		public void TestGenerateWords() {
-			string rawText = "lorem ipsum dolor sit amet consetetur";
+    [Test]
+    public void TestPrepareWords()
+    {
+        var rawText = "lorem ipsum dolor sit amet consetetur";
+        string[] expectedArray =
+        {
+            "lorem", "ipsum", "dolor", "sit", "amet", "consetetur"
+        };
+        var wordsInRawText = 6;
 
-			LipsumGenerator lipsum = new LipsumGenerator(rawText, false);
+        var lipsum = new LipsumGenerator(rawText, false);
+        var wordsPrepared = lipsum.PreparedWords;
 
-			int wordCount = 4;
-			
-			string[] generatedWords = lipsum.GenerateWords(wordCount);
+        Assert.AreEqual(wordsInRawText, wordsPrepared.Count);
+        CollectionAssert.AreEqual(wordsPrepared, expectedArray);
+    }
 
-			Assert.AreEqual(wordCount, generatedWords.Length);
-			
-			for (int i = 0; i < wordCount; i++) {
-				StringAssert.Contains(generatedWords[i], rawText);
-			}
-		}
-		#endregion
+    [Test]
+    public void TestGenerateWords()
+    {
+        var rawText = "lorem ipsum dolor sit amet consetetur";
 
-		#region Sentences
+        var lipsum = new LipsumGenerator(rawText, false);
 
-		[Test]
-		public void TestGenerateSentences() {
-			string rawText = Lipsums.LoremIpsum;
-			LipsumGenerator lipsum = new LipsumGenerator(rawText, false);
+        var wordCount = 4;
 
-			int desiredSentenceCount = 5;
-			string[] generatedSentences = lipsum.
-				GenerateSentences(desiredSentenceCount, Sentence.Medium);
+        var generatedWords = lipsum.GenerateWords(wordCount);
 
-			Assert.AreEqual(desiredSentenceCount, generatedSentences.Length, 
-				"Retrieved sentence count mismatch.");
+        Assert.AreEqual(wordCount, generatedWords.Count);
 
-			for (int i = 0; i < desiredSentenceCount; i++) {
-				Assert.IsNotNull(generatedSentences[i], 
-					String.Format("Generated sentence [{0}] is null.", i));
-				Assert.IsNotEmpty(generatedSentences[i]);
-			}
-		}
+        for (var i = 0; i < wordCount; i++)
+        {
+            StringAssert.Contains(generatedWords[i], rawText);
+        }
+    }
 
-		[Test]
-		public void TestSentenceCapitalizationAndPunctuation() {
-			string rawText = "this";
-			LipsumGenerator lipsum = new LipsumGenerator(rawText, false);
-			string[] generatedSentences = lipsum.GenerateSentences(1, new Sentence(1, 1));
-			string desiredSentence = "This.";
-			Assert.AreEqual(desiredSentence, generatedSentences[0]);
-		}
+    #endregion
 
-		#endregion
+    #region Sentences
 
-		#region Paragraphs
+    [Test]
+    public void TestGenerateSentences()
+    {
+        var rawText = Lipsums.LoremIpsum;
+        var lipsum = new LipsumGenerator(rawText, false);
 
-		[Test]
-		public void TestGenerateParagraphs() {
-			string rawText = Lipsums.LoremIpsum;
-			LipsumGenerator lipsum = new LipsumGenerator(rawText, false);
+        var desiredSentenceCount = 5;
+        var generatedSentences = lipsum.GenerateSentences(desiredSentenceCount, Sentence.Medium);
 
-			int desiredParagraphCount = 5;
-			string[] generatedParagraphs = lipsum.
-				GenerateParagraphs(desiredParagraphCount, Paragraph.Medium);
+        Assert.AreEqual(desiredSentenceCount, generatedSentences.Count,
+            "Retrieved sentence count mismatch.");
 
+        for (var i = 0; i < desiredSentenceCount; i++)
+        {
+            Assert.IsNotNull(generatedSentences[i],
+                string.Format("Generated sentence [{0}] is null.", i));
+            Assert.IsNotEmpty(generatedSentences[i]);
+        }
+    }
 
-			Assert.AreEqual(desiredParagraphCount, generatedParagraphs.Length,
-				"Retrieved sentence count mismatch.");
+    [Test]
+    public void TestSentenceCapitalizationAndPunctuation()
+    {
+        var rawText = "this";
+        var lipsum = new LipsumGenerator(rawText, false);
+        var generatedSentences = lipsum.GenerateSentences(1, new Sentence(1, 1));
+        var desiredSentence = "This.";
+        Assert.AreEqual(desiredSentence, generatedSentences[0]);
+    }
 
-			for (int i = 0; i < desiredParagraphCount; i++) {
-				Assert.IsNotNull(generatedParagraphs[i],
-					String.Format("Generated paragraph [{0}] is null.", i));
-				Assert.IsNotEmpty(generatedParagraphs[i]);
-			}
+    #endregion
 
-		}
+    #region Paragraphs
 
-		#endregion
+    [Test]
+    public void TestGenerateParagraphs()
+    {
+        var rawText = Lipsums.LoremIpsum;
+        var lipsum = new LipsumGenerator(rawText, false);
 
-		#region Characters
-
-		[Test]
-		public void TestGenerateCharacters() {
-			string rawText = "lorem ipsum dolor sit amet consetetur";
-			int desiredCharacterCount = 10;
-			string expectedText = rawText.Substring(0, desiredCharacterCount);
-
-			LipsumGenerator lipsum = new LipsumGenerator(rawText, false);
+        var desiredParagraphCount = 5;
+        var generatedParagraphs = lipsum.GenerateParagraphs(desiredParagraphCount, Paragraph.Medium);
 
 
-			string[] charsRetrieved = lipsum.GenerateCharacters(desiredCharacterCount);
-			
-			// This should only retrieve one string
-			Assert.AreEqual(1, charsRetrieved.Length);
+        Assert.AreEqual(desiredParagraphCount, generatedParagraphs.Count, "Retrieved sentence count mismatch.");
 
-			string generatedString = charsRetrieved[0];
-			Assert.IsNotNull(generatedString);
-			Assert.IsNotEmpty(generatedString);
+        for (var i = 0; i < desiredParagraphCount; i++)
+        {
+            Assert.IsNotNull(generatedParagraphs[i],
+                string.Format("Generated paragraph [{0}] is null.", i));
+            Assert.IsNotEmpty(generatedParagraphs[i]);
+        }
+    }
 
-			Assert.AreEqual(expectedText, generatedString);			
+    #endregion
 
-		}
-		#endregion
+    #region Characters
 
-		#region Utilities Tests
-		[Test]
-		public void TestRemoveEmptyElements() {
-			string[] arrayWithEmpties = new string[] {
-				"", "lorem", "ipsum", null, String.Empty, "xxx"
-			};
+    [Test]
+    public void TestGenerateCharacters()
+    {
+        var rawText = "lorem ipsum dolor sit amet consetetur";
+        var desiredCharacterCount = 10;
+        var expectedText = rawText.Substring(0, desiredCharacterCount);
 
-			string[] expectedArray = new string[] {
-				"lorem", "ipsum", "xxx"
-			};
+        var lipsum = new LipsumGenerator(rawText, false);
 
-			int expectedLength = 3;
+        var charsRetrieved = lipsum.GenerateCharacters(desiredCharacterCount);
 
-			string[] returnedArray = LipsumUtilities.RemoveEmptyElements(arrayWithEmpties);
+        // This should only retrieve one string
+        Assert.AreEqual(1, charsRetrieved.Count);
 
-			CollectionAssert.DoesNotContain(returnedArray, "");
-			CollectionAssert.AllItemsAreNotNull(returnedArray);
-			CollectionAssert.AllItemsAreInstancesOfType(returnedArray, typeof(String));
-			Assert.AreEqual(expectedLength, returnedArray.Length);
-			CollectionAssert.AreEqual(expectedArray, returnedArray);
-		}
+        var generatedString = charsRetrieved[0];
+        Assert.IsNotNull(generatedString);
+        Assert.IsNotEmpty(generatedString);
 
-		#endregion
+        Assert.AreEqual(expectedText, generatedString);
+    }
 
-		#region Static Method Tests
+    #endregion
 
-		[Test]
-		public void TestGenerateNoParams() {
-			string rawText = Lipsums.LoremIpsum;
-			string generated = LipsumGenerator.Generate(1);
+    #region Utilities Tests
 
-			// What can I test to make sure this is working properly?
-			// Null and empty don't seem like valid tests.
+    [Test]
+    public void TestRemoveEmptyElements()
+    {
+        string[] arrayWithEmpties =
+        {
+            "", "lorem", "ipsum", null, string.Empty, "xxx"
+        };
 
-			Assert.IsNotNull(generated);
-			Assert.IsNotEmpty(generated);
-		}
+        string[] expectedArray =
+        {
+            "lorem", "ipsum", "xxx"
+        };
 
-		[Test]
-		public void TestGenerateHtmlNoParams() {
-			string rawText = Lipsums.LoremIpsum;
-			string generated = LipsumGenerator.GenerateHtml(1);
+        var expectedLength = 3;
 
-			// What can I test to make sure this is working properly?
-			// Null and empty don't seem like valid tests.
+        var returnedArray = LipsumUtilities.RemoveEmptyElements(arrayWithEmpties.ToList());
 
-			Assert.IsNotNull(generated);
-			Assert.IsNotEmpty(generated);
-			StringAssert.StartsWith("<p>", generated);
-			StringAssert.EndsWith("</p>", generated);
-		}		
-		#endregion
+        CollectionAssert.DoesNotContain(returnedArray, "");
+        CollectionAssert.AllItemsAreNotNull(returnedArray);
+        CollectionAssert.AllItemsAreInstancesOfType(returnedArray, typeof(string));
+        Assert.AreEqual(expectedLength, returnedArray.Count);
+        CollectionAssert.AreEqual(expectedArray, returnedArray);
+    }
 
-		/*
-		 * I realize there are some tests lacking
-		 * Feel free to write them.
-		 */
-	}
+    #endregion
+
+    #region Static Method Tests
+
+    [Test]
+    public void TestGenerateNoParams()
+    {
+        var rawText = Lipsums.LoremIpsum;
+        var generated = LipsumGenerator.Generate(1);
+
+        // What can I test to make sure this is working properly?
+        // Null and empty don't seem like valid tests.
+
+        Assert.IsNotNull(generated);
+        Assert.IsNotEmpty(generated);
+    }
+
+    [Test]
+    public void TestGenerateHtmlNoParams()
+    {
+        var rawText = Lipsums.LoremIpsum;
+        var generated = LipsumGenerator.GenerateHtml(1);
+
+        // What can I test to make sure this is working properly?
+        // Null and empty don't seem like valid tests.
+
+        Assert.IsNotNull(generated);
+        Assert.IsNotEmpty(generated);
+        StringAssert.StartsWith("<p>", generated);
+        StringAssert.EndsWith("</p>", generated);
+    }
+
+    #endregion
+
+    /*
+     * I realize there are some tests lacking
+     * Feel free to write them.
+     */
 }

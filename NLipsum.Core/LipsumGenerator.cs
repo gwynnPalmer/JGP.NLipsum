@@ -1,339 +1,313 @@
-using System;
-using System.Text;
-using System.Xml;
+﻿using System.Text;
 using System.Text.RegularExpressions;
-using System.Collections;
+using NLipsum.Core.Features;
 
-namespace NLipsum.Core {
-	/// <summary>
-	/// Represents a utility that generates Lipsum from a source.
-	/// </summary>
-	public class LipsumGenerator {
-		private StringBuilder _lipsumText = null;
-		private string[] _preparedWords = new string[] { };
+namespace NLipsum.Core;
 
-		#region Constructors
+/// <summary>
+///     Class LipsumGenerator.
+/// </summary>
+public class LipsumGenerator
+{
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="LipsumGenerator" /> class.
+    /// </summary>
+    public LipsumGenerator()
+    {
+        LipsumText = new StringBuilder(Lipsums.LoremIpsum);
+        PreparedWords = PrepareWords();
+    }
 
-	    /// <summary>
-	    /// Instantiates a LipsumGenerator using the <see cref="Lipsums.LoremIpsum"/> text corpus.
-	    /// </summary>
-	    public LipsumGenerator()
-	    {
-	        this.LipsumText = new StringBuilder(Lipsums.LoremIpsum);
-	    }
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="LipsumGenerator" /> class.
+    /// </summary>
+    /// <param name="rawData">The raw data.</param>
+    /// <param name="isXml">if set to <c>true</c> [is XML].</param>
+    public LipsumGenerator(string rawData, bool isXml)
+    {
+        LipsumText = isXml
+            ? LipsumUtilities.GetTextFromRawXml(rawData)
+            : new StringBuilder(rawData);
 
-		/// <summary>
-		/// Instantiates a LipsumGenerator with the passed data.
-		/// </summary>
-		/// <param name="rawData">The data to be used as LipsumText.</param>
-		/// <param name="isXml">Whether the data is in an Xml format and should be parsed for the LipsumText.</param>
-		public LipsumGenerator(string rawData, bool isXml) {
-			/*
-			 * If we're receiving an XML string we need to do some
-			 * parsing to retrieve the lipsum text.
-			 */
-			this.LipsumText = isXml ?
-				LipsumUtilities.GetTextFromRawXml(rawData) : new StringBuilder(rawData);
-		}
+        PreparedWords = PrepareWords();
+    }
 
-		#endregion
+    /// <summary>
+    ///     Gets the lipsum text.
+    /// </summary>
+    /// <value>The lipsum text.</value>
+    public StringBuilder LipsumText { get; }
 
-		#region General/TopLevel Generators
-		/// <summary>
-		/// Generates 'count' medium length paragraphs separated by environment linebreaks.
-		/// </summary>
-		/// <param name="count">The number of paragraphs desired.</param>
-		/// <returns></returns>
-		public string GenerateLipsum(int count) {
-			return GenerateLipsum(count, Features.Paragraphs, FormatStrings.Paragraph.LineBreaks);
-		}
+    /// <summary>
+    ///     Gets the prepared words.
+    /// </summary>
+    /// <value>The prepared words.</value>
+    public List<string> PreparedWords { get; }
 
-		/// <summary>
-		/// Generates 'count' medium length paragraphs surrounded by html paragraph tags.
-		/// </summary>
-		/// <param name="count">The number of paragraphs desired.</param>
-		/// <returns></returns>
-		public string GenerateLipsumHtml(int count) {
-			return GenerateLipsum(count, Features.Paragraphs, FormatStrings.Paragraph.Html);
-		}
+    #region CHARACTERS
 
-		/// <summary>
-		/// Generates 'count' features.  The format string will be applied to the feature not the result.
-		/// </summary>
-		/// <param name="count">How many features are desired.</param>
-		/// <param name="feature">The desired feature, such as Paragraph or Sentence.</param>
-		/// <param name="formatString">The formatting to apply to each feature.</param>
-		/// <returns></returns>
-		public string GenerateLipsum(int count, Features part, string formatString) {
-			StringBuilder results = new StringBuilder();
-			string[] data = new string[] { };
-			if (part == Features.Paragraphs) {
-				data = GenerateParagraphs(count, formatString);
-			} else if (part == Features.Sentences) {
-				data = GenerateSentences(count, formatString);
-			} else if (part == Features.Words) {
-				data = GenerateWords(count);
-			} else if (part == Features.Characters) {
-				data = GenerateCharacters(count);
-			} else {
-				throw new NotImplementedException("Sorry, this is not yet implemented.");
-			}
+    /// <summary>
+    ///     Generates the characters.
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <returns>List&lt;System.String&gt;.</returns>
+    public List<string> GenerateCharacters(int count)
+    {
+        var result = new List<string>();
 
-			int length = data.Length;
-			for (int i = 0; i < length; i++) {
-				results.Append(data[i]);
-			}
+        if (count >= LipsumText.Length)
+        {
+            count = LipsumText.Length - 1;
+        }
 
-			return results.ToString();
-		}
+        var chars = LipsumText
+            .ToString()
+            .Substring(0, count)
+            .ToCharArray();
 
-		#endregion
+        result.Add(new string(chars));
+        return result;
+    }
 
-		#region Static Generators
+    #endregion
 
-		/// <summary>
-		/// Generates 'count' medium length paragraphs separated by environment linebreaks.
-		/// Standard Lorem Ipsum text will be used.
-		/// </summary>
-		/// <param name="count">The number of paragraphs desired.</param>
-		/// <returns></returns>
-		public static string Generate(int count) {
-			return Generate(count, Lipsums.LoremIpsum);
-		}
+    #region GENERAL/TOP LEVEL GENERATORS
 
-		/// <summary>
-		/// Generates 'count' medium length paragraphs surrounded by Html paragraph tags.
-		/// Standard Lorem Ipsum text will be used.
-		/// </summary>
-		/// <param name="count">The number of paragraphs desired.</param>
-		/// <returns></returns>
-		public static string GenerateHtml(int count) {
-			return Generate(count, FormatStrings.Paragraph.Html, Lipsums.LoremIpsum);
-		}
+    /// <summary>
+    ///     Generates the lipsum.
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <returns>System.String.</returns>
+    public string GenerateLipsum(int count)
+    {
+        return GenerateLipsum(count, FeatureTypes.Paragraphs, FormatStrings.Paragraph.LineBreaks);
+    }
 
-		/// <summary>
-		/// Generates 'count' medium length paragraphs separated by environment linebreaks.
-		/// </summary>
-		/// <param name="count">The number of paragraphs desired.</param>
-		/// <param name="rawText">The text from which to generate the Lipsum.</param>
-		/// <returns></returns>
-		public static string Generate(int count, string rawText) {
-			return Generate(count, FormatStrings.Paragraph.LineBreaks, rawText);
-		}
+    /// <summary>
+    ///     Generates the lipsum.
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <param name="feature">The feature.</param>
+    /// <param name="formatString">The format string.</param>
+    /// <returns>System.String.</returns>
+    public string GenerateLipsum(int count, FeatureTypes feature, string formatString)
+    {
+        var results = new StringBuilder();
 
-		/// <summary>
-		/// Generates 'count' medium length paragraphs.
-		/// </summary>
-		/// <param name="count">The number of paragraphs desired.</param>
-		/// <param name="formatString">The string with which to format the feature.</param>
-		/// <param name="rawText">The text from which to generate the Lipsum.</param>
-		/// <returns></returns>
-		public static string Generate(int count, string formatString, string rawText) {
-			return Generate(count, Features.Paragraphs, formatString, rawText);
-		}
+        var data = feature switch
+        {
+            FeatureTypes.Paragraphs => GenerateParagraphs(count, formatString),
+            FeatureTypes.Sentences => GenerateSentences(count, formatString),
+            FeatureTypes.Words => GenerateWords(count),
+            FeatureTypes.Characters => GenerateCharacters(count),
+            _ => throw new NotImplementedException("Sorry, this is not yet implemented.")
+        };
 
+        foreach (var st in data)
+        {
+            results.Append(st);
+        }
 
-		/// <summary>
-		/// Generates 'count' features.
-		/// </summary>
-		/// <param name="count">The number of features desired.</param>
-		/// <param name="feature">The type of feature desired.</param>
-		/// <param name="formatString">The string with which to format the feature.</param>
-		/// <param name="rawText">The text from which to generate the Lipsum.</param>
-		/// <returns></returns>
-		public static string Generate(int count, Features feature, string formatString, string rawText) {
-			LipsumGenerator generator = new LipsumGenerator(rawText, false);
-			return generator.GenerateLipsum(count, feature, formatString);			
-		}
-		#endregion
+        return results.ToString();
+    }
 
-		#region Characters
-		/// <summary>
-		/// Generates a single string (in an array with only this as an element) 
-		/// by getting the first 'count' characters from LipsumText.
-		/// </summary>
-		/// <param name="count"></param>
-		/// <param name="formatString"></param>
-		/// <returns></returns>
-		public string[] GenerateCharacters(int count) {
-			string[] result = new string[1];
+    /// <summary>
+    ///     Generates the lipsum HTML.
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <returns>System.String.</returns>
+    public string GenerateLipsumHtml(int count)
+    {
+        return GenerateLipsum(count, FeatureTypes.Paragraphs, FormatStrings.Paragraph.Html);
+    }
 
-			/* This whole method needs some thought.  
-			 * Right now it just grabs 'count' amount 
-			 * of characters from the beginning of the
-			 * LipsumText.  It'd be nice if it could 
-			 * generate sentences and then truncate them 
-			 * but I can't think of an elegant way to 
-			 * do that at the moment.  TODO. */
+    #endregion
 
-			if (count >= LipsumText.Length) {
-				count = LipsumText.Length - 1;
-			}
-			char[] chars = LipsumText.ToString().Substring(0, count).ToCharArray();
+    #region STATIC GENERATORS
 
-			result[0] = new String(chars);
+    /// <summary>
+    ///     Generates the specified count.
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <returns>System.String.</returns>
+    public static string Generate(int count)
+    {
+        return Generate(count, Lipsums.LoremIpsum);
+    }
 
-			return result;
-		}
-		#endregion
+    /// <summary>
+    ///     Generates the specified count.
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <param name="rawText">The raw text.</param>
+    /// <returns>System.String.</returns>
+    public static string Generate(int count, string rawText)
+    {
+        return Generate(count, FormatStrings.Paragraph.LineBreaks, rawText);
+    }
 
-		#region Paragraphs
-		/// <summary>
-		/// Generates 'count' medium-sized paragraphs of lipsum text.
-		/// </summary>
-		/// <param name="count">The number of paragraphs desired.</param>
-		public string[] GenerateParagraphs(int count) {
-			return GenerateParagraphs(count, "");
-		}
+    /// <summary>
+    ///     Generates the specified count.
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <param name="formatString">The format string.</param>
+    /// <param name="rawText">The raw text.</param>
+    /// <returns>System.String.</returns>
+    public static string Generate(int count, string formatString, string rawText)
+    {
+        return Generate(count, FeatureTypes.Paragraphs, formatString, rawText);
+    }
 
-		/// <summary>
-		/// Generates 'count' medium-sized paragraphs of lipsum text.
-		/// </summary>
-		/// <param name="count">The number of paragraphs desired.</param>
-		/// <param name="formatString">The string used to format the paragraphs.  Will not perform formatting if null or empty.</param>
-		public string[] GenerateParagraphs(int count, string formatString) {
-			Paragraph options = Paragraph.Medium;
-			options.FormatString = formatString;
-			return GenerateParagraphs(count, options);
-		}
+    /// <summary>
+    ///     Generates the specified count.
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <param name="feature">The feature.</param>
+    /// <param name="formatString">The format string.</param>
+    /// <param name="rawText">The raw text.</param>
+    /// <returns>System.String.</returns>
+    public static string Generate(int count, FeatureTypes feature, string formatString, string rawText)
+    {
+        var generator = new LipsumGenerator(rawText, false);
+        return generator.GenerateLipsum(count, feature, formatString);
+    }
 
-		/// <summary>
-		/// Generates 'count' paragraphs of lipsum text.
-		/// </summary>
-		/// <param name="count">The number of paragraphs desired.</param>
-		/// <param name="options">Used to determine the minimum and maximum sentences per paragraphs, and format string if applicable.</param>
-		/// <returns></returns>
-		public string[] GenerateParagraphs(int count, Paragraph options) {
-			/*
-			 * TODO:  These generate methods could probably be 
-			 * refactored into one method that takes a count 
-			 * and a TextFeature. */ 
-			string[] paragraphs = new string[count];
-			string[] sentences = new string[] { };
-			for (int i = 0; i < count; i++) {
-				/* Get a random amount of sentences based on the
-				 * min and max from the paragraph options */
-				sentences = GenerateSentences(LipsumUtilities.
-					RandomInt((int)options.GetMinimum(), (int)options.GetMaximum()));
+    /// <summary>
+    ///     Generates the HTML.
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <returns>System.String.</returns>
+    public static string GenerateHtml(int count)
+    {
+        return Generate(count, FormatStrings.Paragraph.Html, Lipsums.LoremIpsum);
+    }
 
-				// Shove them all together in sentence fashion.
-				string joined = String.Join(options.Delimiter, sentences);
+    #endregion
 
-				// Format if allowed.
-				paragraphs[i] = String.IsNullOrEmpty(options.FormatString) ?
-					joined : options.Format(joined);
-			}
+    #region PARAGRAPHS
 
-			return paragraphs;
-		}
+    /// <summary>
+    ///     Generates the paragraphs.
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <param name="formatString">The format string.</param>
+    /// <returns>List&lt;System.String&gt;.</returns>
+    public List<string> GenerateParagraphs(int count, string formatString)
+    {
+        var options = Paragraph.Medium;
+        options.SetFormatString(formatString);
+        return GenerateParagraphs(count, options);
+    }
 
-		#endregion
+    /// <summary>
+    ///     Generates the paragraphs.
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <param name="options">The options.</param>
+    /// <returns>List&lt;System.String&gt;.</returns>
+    public List<string> GenerateParagraphs(int count, Paragraph options)
+    {
+        var paragraphs = new List<string>();
+        for (var i = 0; i < count; i++)
+        {
+            var sentences =
+                GenerateSentences(LipsumUtilities.RandomInt(options.MinimumSentences, options.MaximumSentences));
 
-		#region Sentences
+            var joined = string.Join(options.Delimiter, sentences);
 
-		/// <summary>
-		/// Generates 'count' sentences of lipsum text, using a Medium length sentence.  Will use Phase formatting.
-		/// </summary>
-		/// <param name="count">The number of sentences desired.</param>
-		public string[] GenerateSentences(int count) {
-			return GenerateSentences(count, FormatStrings.Sentence.Phrase);
-		}
+            paragraphs.Add(string.IsNullOrEmpty(options.FormatString)
+                ? joined
+                : options.Format(joined));
+        }
 
-		/// <summary>
-		/// Generates 'count' sentences of lipsum text, using a Medium length sentence.
-		/// </summary>
-		/// <param name="count">The number of sentences desired.</param>
-		/// <param name="formatString">The string used to format the sentences.  Will not perform formatting if null or empty.</param>
-		/// <returns></returns>
-		public string[] GenerateSentences(int count, string formatString) {
-			Sentence options = Sentence.Medium;
-			options.FormatString = formatString;
-			return GenerateSentences(count, options);
-		}
+        return paragraphs;
+    }
 
-		/// <summary>
-		/// Generates 'count' sentences of lipsum text.  
-		/// If options.FormatString is not null or empty that string used to format the sentences.
-		/// </summary>
-		/// <param name="count">The number of sentences desired.</param>
-		/// <param name="options">Used to determine the minimum and maximum words per sentence, and format string if applicable.</param>
-		/// <returns></returns>
-		public string[] GenerateSentences(int count, Sentence options) {
-			string[] sentences = new string[count];
-			string[] words = new string[] { };			
-			
-			for (int i = 0; i < count; i++) {
-				/* Get a random amount of words based on the
-				 * min and max from the Sentence options */
-				 words = GenerateWords(LipsumUtilities.
-					 RandomInt((int)options.MinimumWords, (int)options.MaximumWords));
+    #endregion
 
-				// Shove them all together in sentence fashion.
-				string joined = String.Join(options.Delimiter, words);
+    #region SENTENCES
 
-				// Format if allowed.
-				sentences[i] = String.IsNullOrEmpty(options.FormatString) ?
-					joined : options.Format(joined);
-			}
+    /// <summary>
+    ///     Generates the sentences.
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <returns>List&lt;System.String&gt;.</returns>
+    public List<string> GenerateSentences(int count)
+    {
+        return GenerateSentences(count, FormatStrings.Sentence.Phrase);
+    }
 
-			return sentences;
-		}
-		#endregion
+    /// <summary>
+    ///     Generates the sentences.
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <param name="formatString">The format string.</param>
+    /// <returns>List&lt;System.String&gt;.</returns>
+    public List<string> GenerateSentences(int count, string formatString)
+    {
+        var options = Sentence.Medium;
+        options.SetFormatString(formatString);
+        return GenerateSentences(count, options);
+    }
 
-		#region Words
-		/// <summary>
-		/// Generates the amount of lipsum words.
-		/// </summary>
-		/// <param name="count">The amount of words to generate.</param>
-		/// <returns></returns>
-		public string[] GenerateWords(int count) {
-			string[] words = new string[count];
+    /// <summary>
+    ///     Generates the sentences.
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <param name="options">The options.</param>
+    /// <returns>List&lt;System.String&gt;.</returns>
+    public List<string> GenerateSentences(int count, Sentence options)
+    {
+        var sentences = new List<string>();
+        for (var i = 0; i < count; i++)
+        {
+            var words = GenerateWords(LipsumUtilities.RandomInt(options.MinimumWords, options.MaximumWords));
+            var joined = string.Join(options.Delimiter, words);
+            sentences.Add(string.IsNullOrEmpty(options.FormatString)
+                ? joined
+                : options.Format(joined));
+        }
 
-			for (int i = 0; i < count; i++) {
-				words[i] = LipsumUtilities.RandomElement(PreparedWords);
-			}
+        return sentences;
+    }
 
-			return words;
-		}
+    #endregion
 
+    #region WORDS
 
-		/// <summary>
-		/// Retreives all of the words in the LipsumText as an array.
-		/// </summary>
-		/// <returns></returns>
-		public string[] PrepareWords() {
-			return LipsumUtilities.RemoveEmptyElements(
-				Regex.Split(this.LipsumText.ToString(), @"\s")); 
-		}
+    /// <summary>
+    ///     Generates the words.
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <returns>List&lt;System.String&gt;.</returns>
+    public List<string> GenerateWords(int count)
+    {
+        var words = new List<string>();
+        for (var i = 0; i < count; i++)
+        {
+            words.Add(RandomWord());
+        }
 
-		#endregion
+        return words;
+    }
 
-		#region Properties
+    /// <summary>
+    ///     Randoms the word.
+    /// </summary>
+    /// <returns>System.String.</returns>
+    public string RandomWord()
+    {
+        return LipsumUtilities.RandomElement(PreparedWords);
+    }
 
-		/// <summary>
-		/// Gets or sets the text used to generate lipsum.
-		/// </summary>
-		public StringBuilder LipsumText {
-			get { return _lipsumText; }
-			set { 
-				_lipsumText = value; 
-				PreparedWords = PrepareWords();				
-			}
-		}
+    /// <summary>
+    ///     Prepares the words.
+    /// </summary>
+    /// <returns>List&lt;System.String&gt;.</returns>
+    private List<string> PrepareWords()
+    {
+        return LipsumUtilities.RemoveEmptyElements(Regex.Split(LipsumText.ToString(), @"\s").ToList());
+    }
 
-		/// <summary>
-		/// Gets the words prepared from the LipsumText.
-		/// </summary>
-		public string[] PreparedWords {
-			get { return _preparedWords; }
-			protected set { _preparedWords = value; }
-		}
-
-		#endregion
-
-		public string RandomWord() {
-			return LipsumUtilities.RandomElement(PreparedWords);
-		}
-
-	}
+    #endregion
 }
