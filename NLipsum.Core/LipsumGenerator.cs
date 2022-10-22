@@ -80,7 +80,7 @@ public class LipsumGenerator
     /// <returns>System.String.</returns>
     public string GenerateLipsum(int count)
     {
-        return GenerateLipsum(count, FeatureTypes.Paragraphs, FormatStrings.Paragraph.LineBreaks);
+        return GenerateLipsum(count, FeatureType.Paragraphs, FormatStrings.Paragraph.LineBreaks);
     }
 
     /// <summary>
@@ -90,16 +90,16 @@ public class LipsumGenerator
     /// <param name="feature">The feature.</param>
     /// <param name="formatString">The format string.</param>
     /// <returns>System.String.</returns>
-    public string GenerateLipsum(int count, FeatureTypes feature, string formatString)
+    public string GenerateLipsum(int count, FeatureType feature, string formatString)
     {
         var results = new StringBuilder();
 
         var data = feature switch
         {
-            FeatureTypes.Paragraphs => GenerateParagraphs(count, formatString),
-            FeatureTypes.Sentences => GenerateSentences(count, formatString),
-            FeatureTypes.Words => GenerateWords(count),
-            FeatureTypes.Characters => GenerateCharacters(count),
+            FeatureType.Paragraphs => GenerateParagraphs(count, formatString),
+            FeatureType.Sentences => GenerateSentences(count, formatString),
+            FeatureType.Words => GenerateWords(count),
+            FeatureType.Characters => GenerateCharacters(count),
             _ => throw new NotImplementedException("Sorry, this is not yet implemented.")
         };
 
@@ -118,7 +118,7 @@ public class LipsumGenerator
     /// <returns>System.String.</returns>
     public string GenerateLipsumHtml(int count)
     {
-        return GenerateLipsum(count, FeatureTypes.Paragraphs, FormatStrings.Paragraph.Html);
+        return GenerateLipsum(count, FeatureType.Paragraphs, FormatStrings.Paragraph.Html);
     }
 
     #endregion
@@ -155,7 +155,7 @@ public class LipsumGenerator
     /// <returns>System.String.</returns>
     public static string Generate(int count, string formatString, string rawText)
     {
-        return Generate(count, FeatureTypes.Paragraphs, formatString, rawText);
+        return Generate(count, FeatureType.Paragraphs, formatString, rawText);
     }
 
     /// <summary>
@@ -166,7 +166,7 @@ public class LipsumGenerator
     /// <param name="formatString">The format string.</param>
     /// <param name="rawText">The raw text.</param>
     /// <returns>System.String.</returns>
-    public static string Generate(int count, FeatureTypes feature, string formatString, string rawText)
+    public static string Generate(int count, FeatureType feature, string formatString, string rawText)
     {
         var generator = new LipsumGenerator(rawText, false);
         return generator.GenerateLipsum(count, feature, formatString);

@@ -240,6 +240,30 @@ public class LipsumTests
         }
     }
 
+    [Test]
+    public void ILipsumWriter()
+    {
+        ILipsumWriter writer = new LipsumWriter();
+
+        var map = new LipsumMap()
+        {
+            Count = 5,
+            FeatureType = FeatureType.Paragraphs,
+            LipsumLength = LipsumLength.Medium,
+            LipsumText = LipsumText.LoremIpsum
+        };
+
+        var text = writer.Write(map);
+
+        using (new AssertionScope())
+        {
+            text.Should().NotBeNull().And.NotBeEmpty();
+            text.Split(Environment.NewLine)
+                .Where(text => !string.IsNullOrWhiteSpace(text))
+                .Should().HaveCount(map.Count);
+        }
+    }
+
     /*
      * I realize there are some tests lacking
      * Feel free to write them.

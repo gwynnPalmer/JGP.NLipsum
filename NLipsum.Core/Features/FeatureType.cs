@@ -1,9 +1,9 @@
 ﻿namespace NLipsum.Core.Features;
 
 /// <summary>
-///     Enum FeatureTypes
+///     Enum FeatureType
 /// </summary>
-public enum FeatureTypes
+public enum FeatureType
 {
     /// <summary>
     ///     The paragraphs
