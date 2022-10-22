@@ -34,6 +34,22 @@ public static class LipsumUtilities
     }
 
     /// <summary>
+    ///     Randoms the elements.
+    /// </summary>
+    /// <param name="source">The source.</param>
+    /// <param name="count">The count.</param>
+    /// <returns>List&lt;System.String&gt;.</returns>
+    public static List<string> RandomElements(List<string> source, int count)
+    {
+        var result = new List<string>();
+        for (var i = 0; i < count; i++)
+        {
+            result.Add(RandomElement(source));
+        }
+        return result;
+    }
+
+    /// <summary>
     ///     Randoms the int.
     /// </summary>
     /// <param name="minimum">The minimum.</param>

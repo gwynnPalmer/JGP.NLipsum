@@ -243,7 +243,7 @@ public class LipsumTests
     }
 
     [Test]
-    public void ILipsumWriter()
+    public void ILipsumWriter_WriteParagraphs()
     {
         ILipsumWriter writer = new LipsumWriter();
 
@@ -251,9 +251,9 @@ public class LipsumTests
         {
             Count = 5,
             FormatString = FormatStringTypes.ParagraphLineBreaks,
-            FeatureTypes = FeatureTypes.Paragraph,
-            LipsumLengths = LipsumLengths.Medium,
-            LipsumTexts = LipsumTexts.LoremIpsum
+            FeatureType = FeatureTypes.Paragraph,
+            LipsumLength = LipsumLengths.Medium,
+            LipsumText = LipsumTexts.LoremIpsum
         };
 
         var text = writer.Write(map);

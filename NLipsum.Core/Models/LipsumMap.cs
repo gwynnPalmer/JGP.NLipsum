@@ -31,21 +31,21 @@ public class LipsumMap
     /// <value>The length of the lipsum.</value>
     [Required]
     [JsonPropertyName("lipsumLength")]
-    public LipsumLengths LipsumLengths { get; set; } = LipsumLengths.Medium;
+    public LipsumLengths LipsumLength { get; set; } = LipsumLengths.Medium;
 
     /// <summary>
     ///     Gets or sets the lipsum text.
     /// </summary>
     /// <value>The lipsum text.</value>
     [Required]
-    [JsonPropertyName("lipsumTexts")]
-    public LipsumTexts LipsumTexts { get; set; } = LipsumTexts.LoremIpsum;
+    [JsonPropertyName("lipsumText")]
+    public LipsumTexts LipsumText { get; set; } = LipsumTexts.LoremIpsum;
 
     /// <summary>
     ///     Gets or sets the type of the text.
     /// </summary>
     /// <value>The type of the text.</value>
     [Required]
-    [JsonPropertyName("featureTypes")]
-    public FeatureTypes FeatureTypes { get; set; } = FeatureTypes.Paragraph;
+    [JsonPropertyName("featureType")]
+    public FeatureTypes FeatureType { get; set; } = FeatureTypes.Paragraph;
 }
