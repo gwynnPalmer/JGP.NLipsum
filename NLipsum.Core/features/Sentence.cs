@@ -22,9 +22,9 @@ public class Sentence : TextFeature
     /// <param name="formatString">The format string.</param>
     public Sentence(int minimum, int maximum, string? formatString = null)
     {
-        MinimumWords = minimum;
-        MaximumWords = maximum;
-        FormatString = formatString ?? FormatStrings.Sentence.Phrase;
+        MinimumValue = minimum;
+        MaximumValue = maximum;
+        FormatString = formatString ?? FormatStrings.Get(FormatStringTypes.SentencePhrase);
     }
 
     /// <summary>
@@ -44,28 +44,6 @@ public class Sentence : TextFeature
     /// </summary>
     /// <value>The long.</value>
     public static Sentence Long => new(6, 40);
-
-    /// <summary>
-    ///     Gets or sets the maximum words.
-    /// </summary>
-    /// <value>The maximum words.</value>
-    public int MaximumWords
-    {
-        get => MaximumValue;
-
-        set => MaximumValue = value;
-    }
-
-    /// <summary>
-    ///     Gets or sets the minimum words.
-    /// </summary>
-    /// <value>The minimum words.</value>
-    public int MinimumWords
-    {
-        get => MinimumValue;
-
-        set => MinimumValue = value;
-    }
 
     #region OVERRIDES & ESSENTIALS
 

@@ -1,27 +1,27 @@
 ﻿namespace NLipsum.Core.Features;
 
 /// <summary>
-///     Enum FeatureType
+///     Enum FeatureTypes
 /// </summary>
-public enum FeatureType
+public enum FeatureTypes
 {
     /// <summary>
     ///     The paragraphs
     /// </summary>
-    Paragraphs = 0,
+    Paragraph = 0,
 
     /// <summary>
     ///     The sentences
     /// </summary>
-    Sentences = 1,
+    Sentence = 1,
 
     /// <summary>
     ///     The words
     /// </summary>
-    Words = 2,
+    Word = 2,
 
     /// <summary>
     ///     The characters
     /// </summary>
-    Characters = 3
+    Character = 3
 }

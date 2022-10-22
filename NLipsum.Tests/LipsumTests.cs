@@ -2,6 +2,8 @@ using FluentAssertions;
 using FluentAssertions.Execution;
 using NLipsum.Core;
 using NLipsum.Core.Features;
+using NLipsum.Core.Models;
+using NLipsum.Core.Writers;
 using NUnit.Framework;
 
 namespace NLipsum.Tests;
@@ -44,7 +46,7 @@ public class LipsumTests
     [Test]
     public void DefaultConstructorContainsLoremIpsum()
     {
-        var expected = Lipsums.LoremIpsum;
+        var expected = Lipsums.GetLipsum(LipsumTexts.LoremIpsum);
         var generator = new LipsumGenerator();
         expected.Should().Be(generator.LipsumText.ToString());
     }
@@ -100,7 +102,7 @@ public class LipsumTests
     [Test]
     public void TestGenerateSentences()
     {
-        var rawText = Lipsums.LoremIpsum;
+        var rawText = Lipsums.GetLipsum(LipsumTexts.LoremIpsum);
         var lipsum = new LipsumGenerator(rawText, false);
 
         var desiredSentenceCount = 5;
@@ -137,7 +139,7 @@ public class LipsumTests
     [Test]
     public void TestGenerateParagraphs()
     {
-        var rawText = Lipsums.LoremIpsum;
+        var rawText = Lipsums.GetLipsum(LipsumTexts.LoremIpsum);
         var lipsum = new LipsumGenerator(rawText, false);
 
         var desiredParagraphCount = 5;
@@ -248,19 +250,33 @@ public class LipsumTests
         var map = new LipsumMap()
         {
             Count = 5,
-            FeatureType = FeatureType.Paragraphs,
-            LipsumLength = LipsumLength.Medium,
-            LipsumText = LipsumText.LoremIpsum
+            FormatString = FormatStringTypes.ParagraphLineBreaks,
+            FeatureTypes = FeatureTypes.Paragraph,
+            LipsumLengths = LipsumLengths.Medium,
+            LipsumTexts = LipsumTexts.LoremIpsum
         };
 
         var text = writer.Write(map);
+        var paragraphs = text.Split(Environment.NewLine)
+            .Where(text => !string.IsNullOrWhiteSpace(text))
+            .ToList();
+        var sentences = paragraphs.SelectMany(paragraph => paragraph.Split('.'))
+            .Where(text => !string.IsNullOrWhiteSpace(text))
+            .ToList();
 
         using (new AssertionScope())
         {
             text.Should().NotBeNull().And.NotBeEmpty();
-            text.Split(Environment.NewLine)
-                .Where(text => !string.IsNullOrWhiteSpace(text))
-                .Should().HaveCount(map.Count);
+            paragraphs.Should().HaveCount(map.Count);
+
+            foreach (var sentence in sentences)
+            {
+                var words = sentence
+                    .Split(' ')
+                    .Where(text => !string.IsNullOrWhiteSpace(text));
+
+                words.Count().Should().BeInRange(Paragraph.Medium.MinimumValue, Paragraph.Medium.MaximumValue);
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
 using NLipsum.Core.Features;
+using NLipsum.Core.Models;
 
 namespace NLipsum.Core;
 
@@ -14,7 +15,7 @@ public class LipsumGenerator
     /// </summary>
     public LipsumGenerator()
     {
-        LipsumText = new StringBuilder(Lipsums.LoremIpsum);
+        LipsumText = new StringBuilder(Lipsums.GetLipsum(LipsumTexts.LoremIpsum));
         PreparedWords = PrepareWords();
     }
 
@@ -44,33 +45,6 @@ public class LipsumGenerator
     /// <value>The prepared words.</value>
     public List<string> PreparedWords { get; }
 
-    #region CHARACTERS
-
-    /// <summary>
-    ///     Generates the characters.
-    /// </summary>
-    /// <param name="count">The count.</param>
-    /// <returns>List&lt;System.String&gt;.</returns>
-    public List<string> GenerateCharacters(int count)
-    {
-        var result = new List<string>();
-
-        if (count >= LipsumText.Length)
-        {
-            count = LipsumText.Length - 1;
-        }
-
-        var chars = LipsumText
-            .ToString()
-            .Substring(0, count)
-            .ToCharArray();
-
-        result.Add(new string(chars));
-        return result;
-    }
-
-    #endregion
-
     #region GENERAL/TOP LEVEL GENERATORS
 
     /// <summary>
@@ -80,7 +54,7 @@ public class LipsumGenerator
     /// <returns>System.String.</returns>
     public string GenerateLipsum(int count)
     {
-        return GenerateLipsum(count, FeatureType.Paragraphs, FormatStrings.Paragraph.LineBreaks);
+        return GenerateLipsum(count, FeatureTypes.Paragraph, FormatStrings.Get(FormatStringTypes.ParagraphLineBreaks));
     }
 
     /// <summary>
@@ -90,16 +64,16 @@ public class LipsumGenerator
     /// <param name="feature">The feature.</param>
     /// <param name="formatString">The format string.</param>
     /// <returns>System.String.</returns>
-    public string GenerateLipsum(int count, FeatureType feature, string formatString)
+    public string GenerateLipsum(int count, FeatureTypes feature, string formatString)
     {
         var results = new StringBuilder();
 
         var data = feature switch
         {
-            FeatureType.Paragraphs => GenerateParagraphs(count, formatString),
-            FeatureType.Sentences => GenerateSentences(count, formatString),
-            FeatureType.Words => GenerateWords(count),
-            FeatureType.Characters => GenerateCharacters(count),
+            FeatureTypes.Paragraph => GenerateParagraphs(count, formatString),
+            FeatureTypes.Sentence => GenerateSentences(count, formatString),
+            FeatureTypes.Word => GenerateWords(count),
+            FeatureTypes.Character => GenerateCharacters(count),
             _ => throw new NotImplementedException("Sorry, this is not yet implemented.")
         };
 
@@ -118,7 +92,7 @@ public class LipsumGenerator
     /// <returns>System.String.</returns>
     public string GenerateLipsumHtml(int count)
     {
-        return GenerateLipsum(count, FeatureType.Paragraphs, FormatStrings.Paragraph.Html);
+        return GenerateLipsum(count, FeatureTypes.Paragraph, FormatStrings.Get(FormatStringTypes.ParagraphHtml));
     }
 
     #endregion
@@ -132,7 +106,7 @@ public class LipsumGenerator
     /// <returns>System.String.</returns>
     public static string Generate(int count)
     {
-        return Generate(count, Lipsums.LoremIpsum);
+        return Generate(count, Lipsums.GetLipsum(LipsumTexts.LoremIpsum));
     }
 
     /// <summary>
@@ -143,7 +117,7 @@ public class LipsumGenerator
     /// <returns>System.String.</returns>
     public static string Generate(int count, string rawText)
     {
-        return Generate(count, FormatStrings.Paragraph.LineBreaks, rawText);
+        return Generate(count, FormatStrings.Get(FormatStringTypes.ParagraphLineBreaks), rawText);
     }
 
     /// <summary>
@@ -155,7 +129,7 @@ public class LipsumGenerator
     /// <returns>System.String.</returns>
     public static string Generate(int count, string formatString, string rawText)
     {
-        return Generate(count, FeatureType.Paragraphs, formatString, rawText);
+        return Generate(count, FeatureTypes.Paragraph, formatString, rawText);
     }
 
     /// <summary>
@@ -166,7 +140,7 @@ public class LipsumGenerator
     /// <param name="formatString">The format string.</param>
     /// <param name="rawText">The raw text.</param>
     /// <returns>System.String.</returns>
-    public static string Generate(int count, FeatureType feature, string formatString, string rawText)
+    public static string Generate(int count, FeatureTypes feature, string formatString, string rawText)
     {
         var generator = new LipsumGenerator(rawText, false);
         return generator.GenerateLipsum(count, feature, formatString);
@@ -179,7 +153,7 @@ public class LipsumGenerator
     /// <returns>System.String.</returns>
     public static string GenerateHtml(int count)
     {
-        return Generate(count, FormatStrings.Paragraph.Html, Lipsums.LoremIpsum);
+        return Generate(count, FormatStrings.Get(FormatStringTypes.ParagraphHtml), Lipsums.GetLipsum(LipsumTexts.LoremIpsum));
     }
 
     #endregion
@@ -195,7 +169,7 @@ public class LipsumGenerator
     public List<string> GenerateParagraphs(int count, string formatString)
     {
         var options = Paragraph.Medium;
-        options.SetFormatString(formatString);
+        options.FormatString = formatString;
         return GenerateParagraphs(count, options);
     }
 
@@ -211,7 +185,7 @@ public class LipsumGenerator
         for (var i = 0; i < count; i++)
         {
             var sentences =
-                GenerateSentences(LipsumUtilities.RandomInt(options.MinimumSentences, options.MaximumSentences));
+                GenerateSentences(LipsumUtilities.RandomInt(options.MinimumValue, options.MaximumValue));
 
             var joined = string.Join(options.Delimiter, sentences);
 
@@ -234,7 +208,7 @@ public class LipsumGenerator
     /// <returns>List&lt;System.String&gt;.</returns>
     public List<string> GenerateSentences(int count)
     {
-        return GenerateSentences(count, FormatStrings.Sentence.Phrase);
+        return GenerateSentences(count, FormatStrings.Get(FormatStringTypes.SentencePhrase));
     }
 
     /// <summary>
@@ -246,7 +220,7 @@ public class LipsumGenerator
     public List<string> GenerateSentences(int count, string formatString)
     {
         var options = Sentence.Medium;
-        options.SetFormatString(formatString);
+        options.FormatString = formatString;
         return GenerateSentences(count, options);
     }
 
@@ -261,7 +235,7 @@ public class LipsumGenerator
         var sentences = new List<string>();
         for (var i = 0; i < count; i++)
         {
-            var words = GenerateWords(LipsumUtilities.RandomInt(options.MinimumWords, options.MaximumWords));
+            var words = GenerateWords(LipsumUtilities.RandomInt(options.MinimumValue, options.MaximumValue));
             var joined = string.Join(options.Delimiter, words);
             sentences.Add(string.IsNullOrEmpty(options.FormatString)
                 ? joined
@@ -307,6 +281,33 @@ public class LipsumGenerator
     private List<string> PrepareWords()
     {
         return LipsumUtilities.RemoveEmptyElements(Regex.Split(LipsumText.ToString(), @"\s").ToList());
+    }
+
+    #endregion
+
+    #region CHARACTERS
+
+    /// <summary>
+    ///     Generates the characters.
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <returns>List&lt;System.String&gt;.</returns>
+    public List<string> GenerateCharacters(int count)
+    {
+        var result = new List<string>();
+
+        if (count >= LipsumText.Length)
+        {
+            count = LipsumText.Length - 1;
+        }
+
+        var chars = LipsumText
+            .ToString()
+            .Substring(0, count)
+            .ToCharArray();
+
+        result.Add(new string(chars));
+        return result;
     }
 
     #endregion

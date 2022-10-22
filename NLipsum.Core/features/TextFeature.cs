@@ -3,31 +3,31 @@
 /// <summary>
 ///     Class TextFeature.
 /// </summary>
-public class TextFeature
+public class TextFeature : ITextFeature
 {
     /// <summary>
     ///     Gets or sets the delimiter.
     /// </summary>
     /// <value>The delimiter.</value>
-    public string Delimiter { get; protected set; } = " ";
+    public string Delimiter { get; set; } = " ";
 
     /// <summary>
     ///     Gets or sets the format string.
     /// </summary>
     /// <value>The format string.</value>
-    public string FormatString { get; protected set; } = string.Empty;
+    public string FormatString { get; set; } = string.Empty;
 
     /// <summary>
     ///     Gets or sets the minimum value.
     /// </summary>
     /// <value>The minimum value.</value>
-    protected int MinimumValue { get; set; }
+    public int MinimumValue { get; set; }
 
     /// <summary>
     ///     Gets or sets the maximum value.
     /// </summary>
     /// <value>The maximum value.</value>
-    protected int MaximumValue { get; set; }
+    public int MaximumValue { get; set; }
 
     #region DOMAIN METHODS
 
@@ -39,24 +39,6 @@ public class TextFeature
     public virtual string Format(string text)
     {
         return string.Format(FormatString, text);
-    }
-
-    /// <summary>
-    ///     Sets the format string.
-    /// </summary>
-    /// <param name="formatString">The format string.</param>
-    internal void SetFormatString(string formatString)
-    {
-        FormatString = formatString;
-    }
-
-    /// <summary>
-    ///     Sets the delimiter.
-    /// </summary>
-    /// <param name="delimiter">The delimiter.</param>
-    internal void SetDelimiter(string delimiter)
-    {
-        Delimiter = delimiter;
     }
 
     #endregion

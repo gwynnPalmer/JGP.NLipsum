@@ -10,7 +10,7 @@ public class Word : TextFeature
     /// <summary>
     ///     Initializes a new instance of the <see cref="Word" /> class.
     /// </summary>
-    public Word() : this(Medium.MinimumCharacters, Medium.MaximumCharacters)
+    public Word() : this(Medium.MinimumValue, Medium.MaximumValue)
     {
     }
 
@@ -22,31 +22,9 @@ public class Word : TextFeature
     /// <param name="formatString">The format string.</param>
     public Word(int minimum, int maximum, string? formatString = null)
     {
-        MinimumCharacters = minimum;
-        MaximumCharacters = maximum;
-        FormatString = formatString ?? FormatStrings.Default;
-    }
-
-    /// <summary>
-    ///     Gets or sets the minimum characters.
-    /// </summary>
-    /// <value>The minimum characters.</value>
-    public int MinimumCharacters
-    {
-        get => MinimumValue;
-
-        set => MinimumValue = value;
-    }
-
-    /// <summary>
-    ///     Gets or sets the maximum characters.
-    /// </summary>
-    /// <value>The maximum characters.</value>
-    public int MaximumCharacters
-    {
-        get => MaximumValue;
-
-        set => MaximumValue = value;
+        MinimumValue = minimum;
+        MaximumValue = maximum;
+        FormatString = formatString ?? FormatStrings.Get(FormatStringTypes.Default);
     }
 
     /// <summary>

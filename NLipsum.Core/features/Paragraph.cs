@@ -8,14 +8,9 @@
 public class Paragraph : TextFeature
 {
     /// <summary>
-    ///     The sentence options
-    /// </summary>
-    private Sentence _sentenceOptions = Sentence.Medium;
-
-    /// <summary>
     ///     Initializes a new instance of the <see cref="Paragraph" /> class.
     /// </summary>
-    public Paragraph() : this(Medium.MinimumSentences, Medium.MaximumSentences)
+    public Paragraph() : this(Medium.MinimumValue, Medium.MaximumValue)
     {
     }
 
@@ -27,9 +22,9 @@ public class Paragraph : TextFeature
     /// <param name="formatString">The format string.</param>
     public Paragraph(int minimum, int maximum, string? formatString = null)
     {
-        MinimumSentences = minimum;
-        MaximumSentences = maximum;
-        FormatString = formatString ?? FormatStrings.Default;
+        MinimumValue = minimum;
+        MaximumValue = maximum;
+        FormatString = formatString ?? FormatStrings.Get(FormatStringTypes.Default);
     }
 
     /// <summary>
@@ -49,26 +44,4 @@ public class Paragraph : TextFeature
     /// </summary>
     /// <value>The long.</value>
     public static Paragraph Long => new(6, 40);
-
-    /// <summary>
-    ///     Gets or sets the maximum sentences.
-    /// </summary>
-    /// <value>The maximum sentences.</value>
-    public int MaximumSentences
-    {
-        get => MaximumValue;
-
-        set => MaximumValue = value;
-    }
-
-    /// <summary>
-    ///     Gets or sets the minimum sentences.
-    /// </summary>
-    /// <value>The minimum sentences.</value>
-    public int MinimumSentences
-    {
-        get => MinimumValue;
-
-        set => MinimumValue = value;
-    }
 }
