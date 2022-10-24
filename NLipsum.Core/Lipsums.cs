@@ -8,32 +8,6 @@ namespace NLipsum.Core;
 public static class Lipsums
 {
     /// <summary>
-    ///     Gets the lipsum.
-    /// </summary>
-    /// <param name="lipsumText">The lipsum text.</param>
-    /// <returns>System.String.</returns>
-    public static string GetLipsum(LipsumTexts lipsumText)
-    {
-        var lipsum = lipsumText switch
-        {
-            LipsumTexts.ChildHarold => ChildHarold,
-            LipsumTexts.Decameron => Decameron,
-            LipsumTexts.Faust => Faust,
-            LipsumTexts.InDerFremde => InDerFremde,
-            LipsumTexts.LeBateauIvre => LeBateauIvre,
-            LipsumTexts.LeMasque => LeMasque,
-            LipsumTexts.LoremIpsum => LoremIpsum,
-            LipsumTexts.NagyonFaj => NagyonFaj,
-            LipsumTexts.Omagyar => Omagyar,
-            LipsumTexts.RobinsonoKruso => RobinsonoKruso,
-            LipsumTexts.TheRaven => TheRaven,
-            LipsumTexts.TierrayLuna => TierrayLuna,
-            _ => throw new ArgumentOutOfRangeException()
-        };
-        return lipsum;
-    }
-
-    /// <summary>
     ///     Gets the child harold.
     /// </summary>
     /// <value>The child harold.</value>
@@ -104,4 +78,30 @@ public static class Lipsums
     /// </summary>
     /// <value>The tierray luna.</value>
     private static string TierrayLuna => LipsumUtilities.GetTextFromRawXml(Resources.tierrayluna).ToString();
+
+    /// <summary>
+    ///     Gets the lipsum.
+    /// </summary>
+    /// <param name="lipsumText">The lipsum text.</param>
+    /// <returns>System.String.</returns>
+    public static string GetLipsum(LipsumTexts lipsumText)
+    {
+        var lipsum = lipsumText switch
+        {
+            LipsumTexts.ChildHarold => ChildHarold,
+            LipsumTexts.Decameron => Decameron,
+            LipsumTexts.Faust => Faust,
+            LipsumTexts.InDerFremde => InDerFremde,
+            LipsumTexts.LeBateauIvre => LeBateauIvre,
+            LipsumTexts.LeMasque => LeMasque,
+            LipsumTexts.LoremIpsum => LoremIpsum,
+            LipsumTexts.NagyonFaj => NagyonFaj,
+            LipsumTexts.Omagyar => Omagyar,
+            LipsumTexts.RobinsonoKruso => RobinsonoKruso,
+            LipsumTexts.TheRaven => TheRaven,
+            LipsumTexts.TierrayLuna => TierrayLuna,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+        return lipsum;
+    }
 }

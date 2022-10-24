@@ -24,7 +24,7 @@ public class Paragraph : TextFeature
     {
         MinimumValue = minimum;
         MaximumValue = maximum;
-        FormatString = formatString ?? FormatStrings.Get(FormatStringTypes.Default);
+        FormatString = formatString ?? FormatStrings.Get(FormatStringTypes.ParagraphLineBreaks);
     }
 
     /// <summary>

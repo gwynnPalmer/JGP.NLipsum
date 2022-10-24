@@ -1,6 +1,7 @@
 using FluentAssertions;
 using FluentAssertions.Execution;
 using NLipsum.Core;
+using NLipsum.Core.Factories;
 using NLipsum.Core.Features;
 using NLipsum.Core.Models;
 using NLipsum.Core.Writers;
@@ -242,17 +243,123 @@ public class LipsumTests
         }
     }
 
+    /// <summary>
+    ///     Defines the test method ILipsumWriter_WriteCharacters.
+    /// </summary>
+    [Test]
+    public void ILipsumWriter_WriteCharacters()
+    {
+        ILipsumWriter writer = new LipsumWriter();
+
+        var map = new LipsumMap
+        {
+            Count = new Random().Next(1, 15),
+            FormatString = FormatStringTypes.Default,
+            FeatureType = FeatureTypes.Character,
+            LipsumLength = LipsumLengths.Long,
+            LipsumText = LipsumTexts.LoremIpsum
+        };
+
+        var characters = writer.Write(map);
+
+        using (new AssertionScope())
+        {
+            characters.Should().NotBeNull().And.NotBeEmpty();
+            characters.Should().HaveLength(map.Count);
+        }
+    }
+
+    /// <summary>
+    ///     Defines the test method ILipsumWriter_WriteWords.
+    /// </summary>
+    [Test]
+    public void ILipsumWriter_WriteWords()
+    {
+        ILipsumWriter writer = new LipsumWriter();
+        var lengthValues = Enum.GetValues<LipsumLengths>();
+
+        var map = new LipsumMap
+        {
+            Count = new Random().Next(1, 15),
+            FormatString = FormatStringTypes.Default,
+            FeatureType = FeatureTypes.Word,
+            LipsumLength = lengthValues[new Random().Next(0, lengthValues.Length)],
+            LipsumText = LipsumTexts.LoremIpsum
+        };
+
+        var words = writer.Write(map);
+        var wordsList = words.Split(' ').ToList();
+        var option = TextFeatureFactory.GetInstance(FeatureTypes.Word).Create(map.LipsumLength);
+
+        using (new AssertionScope())
+        {
+            words.Should().NotBeNull().And.NotBeEmpty();
+            wordsList.Should().HaveCount(map.Count);
+
+            foreach (var word in wordsList)
+            {
+                word.Should().NotBeNullOrEmpty();
+                word.Length.Should().BeInRange(option.MinimumValue, option.MaximumValue);
+            }
+        }
+    }
+
+    /// <summary>
+    ///     Defines the test method ILipsumWriter_WriteSentences.
+    /// </summary>
+    [Test]
+    public void ILipsumWriter_WriteSentences()
+    {
+        ILipsumWriter writer = new LipsumWriter();
+        var lengthValues = Enum.GetValues<LipsumLengths>();
+
+        var map = new LipsumMap
+        {
+            Count = new Random().Next(1, 15),
+            FormatString = FormatStringTypes.SentencePhrase,
+            FeatureType = FeatureTypes.Sentence,
+            LipsumLength = lengthValues[new Random().Next(0, lengthValues.Length)],
+            LipsumText = LipsumTexts.LoremIpsum
+        };
+
+        var sentences = writer.Write(map);
+        var sentencesList = sentences
+            .Split('.')
+            .Where(text => !string.IsNullOrWhiteSpace(text))
+            .ToList();
+        var options = TextFeatureFactory.GetInstance(FeatureTypes.Sentence).Create(map.LipsumLength);
+
+        using (new AssertionScope())
+        {
+            sentences.Should().NotBeNull().And.NotBeEmpty();
+            sentencesList.Should().HaveCount(map.Count);
+
+            foreach (var sentence in sentencesList)
+            {
+                var words = sentence
+                    .Split(' ')
+                    .Where(text => !string.IsNullOrWhiteSpace(text));
+
+                words.Count().Should().BeInRange(options.MinimumValue, options.MaximumValue);
+            }
+        }
+    }
+
+    /// <summary>
+    ///     Defines the test method ILipsumWriter_WriteParagraphs.
+    /// </summary>
     [Test]
     public void ILipsumWriter_WriteParagraphs()
     {
         ILipsumWriter writer = new LipsumWriter();
+        var lengthValues = Enum.GetValues<LipsumLengths>();
 
-        var map = new LipsumMap()
+        var map = new LipsumMap
         {
             Count = 5,
             FormatString = FormatStringTypes.ParagraphLineBreaks,
             FeatureType = FeatureTypes.Paragraph,
-            LipsumLength = LipsumLengths.Medium,
+            LipsumLength = lengthValues[new Random().Next(0, lengthValues.Length)],
             LipsumText = LipsumTexts.LoremIpsum
         };
 
@@ -260,6 +367,8 @@ public class LipsumTests
         var paragraphs = text.Split(Environment.NewLine)
             .Where(text => !string.IsNullOrWhiteSpace(text))
             .ToList();
+
+        var sentenceOptions = TextFeatureFactory.GetInstance(FeatureTypes.Sentence).Create(map.LipsumLength);
         var sentences = paragraphs.SelectMany(paragraph => paragraph.Split('.'))
             .Where(text => !string.IsNullOrWhiteSpace(text))
             .ToList();
@@ -275,7 +384,7 @@ public class LipsumTests
                     .Split(' ')
                     .Where(text => !string.IsNullOrWhiteSpace(text));
 
-                words.Count().Should().BeInRange(Paragraph.Medium.MinimumValue, Paragraph.Medium.MaximumValue);
+                words.Count().Should().BeInRange(sentenceOptions.MinimumValue, sentenceOptions.MaximumValue);
             }
         }
     }

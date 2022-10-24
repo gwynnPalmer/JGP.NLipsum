@@ -1,57 +1,57 @@
-﻿using System.Text.RegularExpressions;
+﻿using NLipsum.Core.Features;
 using NLipsum.Core.Models;
 
 namespace NLipsum.Core.Generators;
 
 /// <summary>
 ///     Class WordGenerator.
-///     Implements the <see cref="NLipsum.Core.Generators.FeatureOptionsBuilder" />
+///     Implements the <see cref="TextFeatureGeneratorBase" />
 ///     Implements the <see cref="NLipsum.Core.Generators.IFeatureGenerator" />
 /// </summary>
-/// <seealso cref="NLipsum.Core.Generators.FeatureOptionsBuilder" />
+/// <seealso cref="TextFeatureGeneratorBase" />
 /// <seealso cref="NLipsum.Core.Generators.IFeatureGenerator" />
-internal class WordGenerator : FeatureOptionsBuilder, IFeatureGenerator
+internal class WordGenerator : TextFeatureGeneratorBase, IFeatureGenerator
 {
     /// <summary>
     ///     Generates the specified map.
     /// </summary>
     /// <param name="map">The map.</param>
     /// <returns>List&lt;System.String&gt;.</returns>
-    public List<string> Generate(LipsumMap map)
+    public string Generate(LipsumMap map)
     {
+        var options = GetOptions(FeatureTypes.Word, map.LipsumLength, map.FormatString);
         var lipsum = Lipsums.GetLipsum(map.LipsumText);
         var lipsumList = PrepareWords(lipsum);
-        return Generate(map.Count, lipsumList);
-    }
 
-    /// <summary>
-    ///     Generates the specified count.
-    /// </summary>
-    /// <param name="count">The count.</param>
-    /// <param name="preparedWords">The prepared words.</param>
-    /// <returns>List&lt;System.String&gt;.</returns>
-    private List<string> Generate(int count, List<string> preparedWords)
-    {
         var words = new List<string>();
-        for (var i = 0; i < count; i++)
+        for (var i = 0; i < map.Count; i++)
         {
-            var randomWord = LipsumUtilities.RandomElement(preparedWords);
-            words.Add(randomWord);
+            var word = GetSuitableWord(lipsumList, options);
+            words.Add(word);
         }
 
-        return words;
+        return string.Join(" ", words);
     }
 
     /// <summary>
-    ///     Prepares the words.
+    ///     Gets the suitable word.
     /// </summary>
-    /// <param name="lipsum">The lipsum.</param>
-    /// <returns>List&lt;System.String&gt;.</returns>
-    private List<string> PrepareWords(string lipsum)
+    /// <param name="lipsumList">The lipsum list.</param>
+    /// <param name="options">The options.</param>
+    /// <returns>System.String.</returns>
+    private static string GetSuitableWord(List<string> lipsumList, ITextFeature options)
     {
-        var source = Regex
-            .Split(lipsum, @"\s")
-            .ToList();
-        return LipsumUtilities.RemoveEmptyElements(source);
+        var word = LipsumUtilities.RandomElement(lipsumList);
+        if (word.Length >= options.MinimumValue && word.Length <= options.MaximumValue)
+        {
+            return word;
+        }
+
+        while (word.Length < options.MinimumValue || word.Length > options.MaximumValue)
+        {
+            word = LipsumUtilities.RandomElement(lipsumList);
+        }
+
+        return word;
     }
 }

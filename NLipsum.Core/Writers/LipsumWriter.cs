@@ -1,6 +1,4 @@
-﻿using System.Text;
-using NLipsum.Core.Factories;
-using NLipsum.Core.Features;
+﻿using NLipsum.Core.Factories;
 using NLipsum.Core.Models;
 
 namespace NLipsum.Core.Writers;
@@ -37,15 +35,8 @@ public class LipsumWriter : ILipsumWriter
     /// <returns>System.String.</returns>
     public string Write(LipsumMap map)
     {
-        var lipsumList = FeatureGeneratorFactory
+        return FeatureGeneratorFactory
             .GetInstance(map.FeatureType)
             .Generate(map);
-
-        var builder = new StringBuilder();
-        foreach (var lipsum in lipsumList)
-        {
-            builder.AppendLine(lipsum);
-        }
-        return builder.ToString();
     }
 }

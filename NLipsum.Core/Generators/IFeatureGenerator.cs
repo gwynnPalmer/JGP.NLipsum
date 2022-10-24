@@ -11,6 +11,6 @@ internal interface IFeatureGenerator
     ///     Generates the specified map.
     /// </summary>
     /// <param name="map">The map.</param>
-    /// <returns>List&lt;System.String&gt;.</returns>
-    List<string> Generate(LipsumMap map);
+    /// <returns>System.String.</returns>
+    string Generate(LipsumMap map);
 }

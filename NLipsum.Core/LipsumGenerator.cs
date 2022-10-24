@@ -45,6 +45,33 @@ public class LipsumGenerator
     /// <value>The prepared words.</value>
     public List<string> PreparedWords { get; }
 
+    #region CHARACTERS
+
+    /// <summary>
+    ///     Generates the characters.
+    /// </summary>
+    /// <param name="count">The count.</param>
+    /// <returns>List&lt;System.String&gt;.</returns>
+    public List<string> GenerateCharacters(int count)
+    {
+        var result = new List<string>();
+
+        if (count >= LipsumText.Length)
+        {
+            count = LipsumText.Length - 1;
+        }
+
+        var chars = LipsumText
+            .ToString()
+            .Substring(0, count)
+            .ToCharArray();
+
+        result.Add(new string(chars));
+        return result;
+    }
+
+    #endregion
+
     #region GENERAL/TOP LEVEL GENERATORS
 
     /// <summary>
@@ -153,7 +180,8 @@ public class LipsumGenerator
     /// <returns>System.String.</returns>
     public static string GenerateHtml(int count)
     {
-        return Generate(count, FormatStrings.Get(FormatStringTypes.ParagraphHtml), Lipsums.GetLipsum(LipsumTexts.LoremIpsum));
+        return Generate(count, FormatStrings.Get(FormatStringTypes.ParagraphHtml),
+            Lipsums.GetLipsum(LipsumTexts.LoremIpsum));
     }
 
     #endregion
@@ -281,33 +309,6 @@ public class LipsumGenerator
     private List<string> PrepareWords()
     {
         return LipsumUtilities.RemoveEmptyElements(Regex.Split(LipsumText.ToString(), @"\s").ToList());
-    }
-
-    #endregion
-
-    #region CHARACTERS
-
-    /// <summary>
-    ///     Generates the characters.
-    /// </summary>
-    /// <param name="count">The count.</param>
-    /// <returns>List&lt;System.String&gt;.</returns>
-    public List<string> GenerateCharacters(int count)
-    {
-        var result = new List<string>();
-
-        if (count >= LipsumText.Length)
-        {
-            count = LipsumText.Length - 1;
-        }
-
-        var chars = LipsumText
-            .ToString()
-            .Substring(0, count)
-            .ToCharArray();
-
-        result.Add(new string(chars));
-        return result;
     }
 
     #endregion
